@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import Michael from "../assets/Michael.Jpeg";
+import Michael from "../assets/Michael.jpeg";
 import Grace from "../assets/Grace.jpeg";
 import Ose from "../assets/Ose.jpeg";
 import Omale from "../assets/Omale.jpeg";

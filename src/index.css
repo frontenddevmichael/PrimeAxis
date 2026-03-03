@@ -1981,12 +1981,6 @@ img, video {
   margin: 0;
 }
 
-/* ─────────────────────────────────────────────────────────────
-   BENTO GRID
-   Row 1 : [dev ── 7col ──────────────] [product 5col     ]
-   Row 2 : [stat 3col] [redesign 4col ] [product continues]
-   Row 3 : [uiux ── 6col ─────────────] [cta ── 6col ─────]
-───────────────────────────────────────────────────────────── */
 
 .svc-bento {
   display: grid;
@@ -2030,9 +2024,7 @@ img, video {
 
 .svc-tile {
   position: relative;
-  background: #ffffff;
-  border: 1px solid transparent;
-  /* invisible at rest — shadow does the work */
+  background: var(--bg-elevated);
   border-radius: var(--radius-xl);
   overflow: hidden;
   cursor: default;
@@ -2075,7 +2067,6 @@ img, video {
   flex-direction: column;
   gap: var(--space-3);
   height: 100%;
-  background-color: var(--bg-base);
   border: none;
 }
 
@@ -2234,11 +2225,6 @@ img, video {
   color: var(--accent-secondary);
 }
 
-/* ─────────────────────────────────────────────────────────────
-   GRAPHIC WRAPPERS
-   Key fix: absolute graphics are clipped by overflow:hidden on .svc-tile
-   Inline (side) graphics use a fixed height block at the bottom of the tile
-───────────────────────────────────────────────────────────── */
 
 /* ── absolute-positioned graphics (Dev, Product) ── */
 .svc-tile__graphic-wrap {
@@ -2277,20 +2263,13 @@ img, video {
   transform: translateY(-4px);
 }
 
-/* ── inline side graphics (Redesign, UX) ──
-   Placed as a normal flow element at the bottom of the tile inner.
-   Fixed height so it never causes overflow.
-───────────────────────────────────────────────────────────── */
 .svc-tile__graphic-wrap--side {
   position: relative;
-  /* back in normal flow */
   z-index: 2;
   width: 100%;
   height: 90px;
-  /* hard cap — no overflow */
   overflow: hidden;
   margin-top: auto;
-  /* push to bottom of flex column */
   flex-shrink: 0;
   opacity: 0.75;
   transition: opacity var(--ease-smooth);
@@ -3195,8 +3174,7 @@ img, video {
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--accent-active);
-  background: var(--glass-bg);
+  background: var(--bg-base);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid var(--_card-border);
@@ -3517,7 +3495,6 @@ img, video {
   border-right: 10px dashed var(--bg-base);
 }
 
-/* SVG canvas — always on dark purple bg, so strokes are white-based */
 .contact__canvas {
   position: absolute;
   inset: 0;
@@ -3546,7 +3523,7 @@ img, video {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  font-size: 10px;
+  font-size: 102x;
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;

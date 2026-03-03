@@ -4,7 +4,7 @@ import Grace from "../assets/Grace.jpeg";
 import Ose from "../assets/Ose.jpeg";
 import Omale from "../assets/Omale.jpeg";
 import Tumise from "../assets/Tumise.jpeg";
-
+import Ola from "../assets/Ola.jpeg"
 const TEAM = [
     {
         id: "omale-michael",
@@ -61,7 +61,7 @@ const TEAM = [
         signature: "Motion is the punctuation of good design.",
         bio: "Gives PrimeAxis's stories rhythm and weight through animation and dynamic visual narrative.",
         skills: ["Motion Graphics", "Animation", "Video Editing"],
-        photo: null,
+        photo: Ola,
         linkedin: "#",
     },
     {

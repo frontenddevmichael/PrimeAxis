@@ -68,7 +68,7 @@ export default function HeroPage() {
                         <button className="btn btn--primary">
                             Explore Services
                         </button>
-                        <button className="btn btn--ghost">
+                        <button className="  btn--contact">
                             Contact Us
                             <span className="btn__arrow" aria-hidden="true">↗</span>
                         </button>

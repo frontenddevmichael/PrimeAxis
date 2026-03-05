@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
 
+/* ─── EmailJS Config ──────────────────────────────────────── */
+const EJS_PUBLIC_KEY = "vBFrPcNY_80UVv0u4";
+const EJS_SERVICE_ID = "service_g9opurp";
+const EJS_TEMPLATE_ID = "template_s6dogng";
 
 /* ─── Constants ───────────────────────────────────────────── */
 const PROJECT_TYPES = [
@@ -78,6 +83,11 @@ export default function ContactSection() {
     const sectionRef = useRef(null);
     const submitting = useRef(false);
 
+    /* Initialise EmailJS once on mount */
+    useEffect(() => {
+        emailjs.init(EJS_PUBLIC_KEY);
+    }, []);
+
     /* Intersection observer reveal */
     useEffect(() => {
         const io = new IntersectionObserver(
@@ -96,6 +106,7 @@ export default function ContactSection() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (submitting.current) return;
+
         const errs = validate(form);
         if (Object.keys(errs).length) { setErrors(errs); return; }
 
@@ -103,23 +114,27 @@ export default function ContactSection() {
         setStatus("loading");
         setApiError("");
 
+        /* Template variables — must match your EmailJS template exactly */
+        const templateParams = {
+            name: form.name,
+            email: form.email,
+            company: form.company || "N/A",
+            projectType: form.projectType,
+            budget: form.budget,
+            timeline: form.timeline || "Not specified",
+            description: form.description,
+        };
+
         try {
-            const res = await fetch("/api/contact", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    name: form.name, email: form.email,
-                    projectType: form.projectType, budget: form.budget,
-                    description: form.description,
-                    company: form.company || undefined,
-                    timeline: form.timeline || undefined,
-                }),
-            });
-            if (!res.ok) throw new Error(`Server error: ${res.status}`);
+            await emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, templateParams);
             setStatus("success");
             setForm(INITIAL_FORM);
         } catch (err) {
-            setApiError(err.message || "Something went wrong. Please try again.");
+            const msg =
+                err?.text ||
+                err?.message ||
+                "Something went wrong. Please try again.";
+            setApiError(msg);
             setStatus("error");
         } finally {
             submitting.current = false;
@@ -143,7 +158,6 @@ export default function ContactSection() {
             <div className="contact__canvas" aria-hidden="true">
                 <svg className="contact__canvas-svg" viewBox="0 0 560 720"
                     fill="none" preserveAspectRatio="xMidYMid slice">
-                    {/* Large open circle — architectural anchor */}
                     <circle cx="280" cy="360" r="260"
                         stroke="rgba(255,255,255,0.07)" strokeWidth="1" />
                     <circle cx="280" cy="360" r="180"
@@ -154,7 +168,6 @@ export default function ContactSection() {
                     </circle>
                     <circle cx="280" cy="360" r="100"
                         stroke="rgba(255,255,255,0.04)" strokeWidth="0.6" />
-                    {/* Fine crosshatch grid — top quadrant */}
                     {Array.from({ length: 10 }, (_, i) => (
                         <line key={`h${i}`}
                             x1="0" y1={40 + i * 22} x2="560" y2={40 + i * 22}
@@ -165,18 +178,15 @@ export default function ContactSection() {
                             x1={i * 40} y1="0" x2={i * 40} y2="260"
                             stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" />
                     ))}
-                    {/* Diagonal slash — editorial tension */}
                     <line x1="0" y1="540" x2="200" y2="720"
                         stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
                     <line x1="30" y1="540" x2="230" y2="720"
                         stroke="rgba(255,255,255,0.03)" strokeWidth="0.6" />
-                    {/* Corner dot cluster */}
                     {[0, 12, 24].map(ox => [0, 12, 24].map(oy => (
                         <circle key={`${ox}${oy}`}
                             cx={480 + ox} cy={60 + oy} r="1.5"
                             fill="rgba(255,255,255,0.12)" />
                     )))}
-                    {/* Accent line — bottom trim */}
                     <line x1="48" y1="680" x2="260" y2="680"
                         stroke="rgba(196,122,255,0.25)" strokeWidth="1" />
                     <circle cx="48" cy="680" r="3"
@@ -186,24 +196,19 @@ export default function ContactSection() {
 
             <div className="contact__layout">
 
-                {/* ── LEFT PANEL — dark brand purple ── */}
+                {/* ── LEFT PANEL ── */}
                 <div className="contact__panel">
-
                     <div className="contact__panel-content">
                         <span className="contact__eyebrow">Start a Project</span>
-
                         <h2 className="contact__title">
                             Let's Build<br />
                             Something<br />
                             <em className="contact__title-em">Scalable.</em>
                         </h2>
-
                         <p className="contact__panel-body">
                             Tell us about your project and we'll respond with
                             a focused plan — no fluff, no generic proposals.
                         </p>
-
-                        {/* Process timeline */}
                         <ol className="contact__process" aria-label="Our process">
                             {PROCESS_STEPS.map((step, i) => (
                                 <li key={step.num} className="contact__step"
@@ -216,8 +221,6 @@ export default function ContactSection() {
                                 </li>
                             ))}
                         </ol>
-
-                        {/* Contact detail strip */}
                         <div className="contact__detail">
                             <span className="contact__detail-label">Response time</span>
                             <span className="contact__detail-value">Within 24 hours</span>
@@ -225,7 +228,7 @@ export default function ContactSection() {
                     </div>
                 </div>
 
-                {/* ── RIGHT PANEL — white form ── */}
+                {/* ── RIGHT PANEL — form ── */}
                 <div className="contact__form-panel">
                     {status === "success" ? (
                         <SuccessScreen onReset={handleReset} />
@@ -239,7 +242,6 @@ export default function ContactSection() {
                                 </p>
                             </div>
 
-                            {/* Required fields grid */}
                             <div className="cf__grid">
 
                                 <div className="cf__field">
@@ -305,7 +307,6 @@ export default function ContactSection() {
 
                             </div>
 
-                            {/* Optional divider */}
                             <div className="cf__divider" aria-hidden="true">
                                 <span className="cf__divider-line" />
                                 <span className="cf__divider-label">Optional</span>
@@ -333,7 +334,6 @@ export default function ContactSection() {
                                 </div>
                             </div>
 
-                            {/* API error */}
                             {status === "error" && apiError && (
                                 <div className="cf__api-error" role="alert">⚠ {apiError}</div>
                             )}

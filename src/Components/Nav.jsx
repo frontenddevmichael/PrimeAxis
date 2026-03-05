@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 
 const NAV_LINKS = [
-    { label: "Home", href: "#home" },
-    { label: "About", href: "#about" },
-    { label: "Services", href: "#services" },
-    { label: "Team", href: "#team" },
+    { label: "Home", href: "#Hero" },
+    { label: "About", href: "#About" },
+    { label: "Services", href: "#Services" },
+    { label: "Team", href: "#Teams" },
 ];
 
 function IconSun() {
@@ -85,7 +85,7 @@ export default function Nav() {
 
             if (current > lastScrollY.current && current > 80) {
                 setHidden(true);
-                setMenuOpen(false); // keep your logic intact
+                setMenuOpen(false); 
             } else {
                 setHidden(false);
             }
@@ -146,7 +146,7 @@ export default function Nav() {
         <nav ref={navRef} className={navClass} aria-label="Main navigation">
             <div className="nav-container">
 
-                {/* Logo */}
+                {/* Logoo */}
                 <div className="logo">
                     Prime
                     <span>
@@ -166,7 +166,9 @@ export default function Nav() {
                         ))}
                     </ul>
 
-                    <button className="cta" aria-label="Contact us">
+                    <button className="cta" aria-label="Contact us"
+                    onClick={() => document.getElementById("Contact").scrollIntoView({behavior:"smooth"})}
+                    >
                         Contact us
                     </button>
                 </div>

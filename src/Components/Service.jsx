@@ -234,6 +234,7 @@ export default function ServicesPage() {
         <section
             className={`services${visible ? " services--visible" : ""}`}
             ref={sectionRef}
+            id="Services"
         >
             {/* subtle dot-grid atmosphere */}
             <div className="services__bg" aria-hidden="true">

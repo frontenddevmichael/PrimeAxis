@@ -461,6 +461,7 @@ img, video {
 .cta:hover {
   background: var(--accent-primary);
   transform: translateY(-1px);
+  color: white;
   box-shadow: 0 6px 20px rgba(106, 0, 244, 0.3);
 }
 
@@ -2817,7 +2818,7 @@ img, video {
 .team__grid {
   opacity: 0;
   transform: translateY(28px);
-  transition: opacity 0.75s var(--ease-smooth), transform 0.75s var(--ease-smooth);
+  transition: all .4s ease-in-out;
 }
 
 .team--visible .team__header {

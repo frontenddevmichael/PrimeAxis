@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import {useNavigate} from "react-router-dom";
 import mockup from "../assets/mockup.png";
 
 export default function HeroPage() {
@@ -28,11 +29,21 @@ export default function HeroPage() {
         transition: "transform 0.08s linear",
     };
 
+    const scrollToContact = () => {
+        const section = document.getElementById("Contact");
+        section.scrollIntoView({ behavior: "smooth" });
+    }
+
+    const scrollToServices = () => {
+        const section = document.getElementById("Services")
+        section.scrollIntoView({behavior: "smooth"})
+    }
     return (
         <section
             className={`hero${visible ? " hero--visible" : ""}`}
             ref={heroRef}
             onMouseMove={handleMouseMove}
+            id="Hero"
         >
             {/* ── Background — single radial wash + dot grid ── */}
             <div className="hero__bg" aria-hidden="true">
@@ -65,10 +76,10 @@ export default function HeroPage() {
 
 
                     <div className="hero__buttons">
-                        <button className="btn btn--primary">
+                        <button className="btn btn--primary" onClick={scrollToServices}>
                             Explore Services
                         </button>
-                        <button className="  btn--contact">
+                        <button className="btn--contact" onClick={scrollToContact}>
                             Contact Us
                             <span className="btn__arrow" aria-hidden="true">↗</span>
                         </button>

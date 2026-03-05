@@ -137,6 +137,7 @@ export default function ContactSection() {
         <section
             className={`contact${visible ? " contact--visible" : ""}`}
             ref={sectionRef}
+            id="Contact"
         >
             {/* ── Architectural SVG canvas — dark panel only ── */}
             <div className="contact__canvas" aria-hidden="true">

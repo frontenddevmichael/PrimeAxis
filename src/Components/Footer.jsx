@@ -8,19 +8,19 @@ const NAV = [
     {
         heading: "Services",
         links: [
-            { label: "Web Development", href: "#services" },
-            { label: "Digital Products", href: "#services" },
-            { label: "UI / UX Design", href: "#services" },
-            { label: "Redesign & Perf.", href: "#services" },
+            { label: "Web Development", href: "#Services" },
+            { label: "Digital Products", href: "#Services" },
+            { label: "UI / UX Design", href: "#Services" },
+            { label: "Redesign & Perf.", href: "#Services" },
         ],
     },
     {
         heading: "Company",
         links: [
-            { label: "About Us", href: "#about" },
+            { label: "About Us", href: "#About" },
             { label: "Our Work", href: "#work" },
-            { label: "The team", href: "#process" },
-            { label: "Contact", href: "#careers" },
+            { label: "The team", href: "#Team" },
+            { label: "Contact", href: "#Contact" },
         ],
     },
     {

@@ -38,6 +38,7 @@ export default function AboutPage() {
         <section
             className={`about${visible ? " about--visible" : ""}`}
             ref={sectionRef}
+            id="About"
         >
             {/* Subtle background shape */}
             <div className="about__bg" aria-hidden="true">

@@ -24,14 +24,6 @@ const NAV = [
         ],
     },
     {
-        heading: "Legal",
-        links: [
-            { label: "Privacy Policy", href: "#privacy" },
-            { label: "Terms of Use", href: "#terms" },
-            { label: "Cookie Policy", href: "#cookies" },
-        ],
-    },
-    {
         heading: "Connect",
         links: [
             { label: "Twitter / X", href: "#twitter" },

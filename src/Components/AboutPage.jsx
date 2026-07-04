@@ -75,23 +75,14 @@ const APPROACH = [
 ];
 
 export default function AboutPage() {
-    const [visible, setVisible] = useState(false);
     const sectionRef = useRef(null);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-            { threshold: 0.12 }
-        );
-        if (sectionRef.current) observer.observe(sectionRef.current);
-        return () => observer.disconnect();
-    }, []);
 
     return (
         <section
-            className={`about${visible ? " about--visible" : ""}`}
+            className="about"
             ref={sectionRef}
             id="About"
+            data-reveal="fade-up"
         >
             {/* Subtle background shape */}
             <div className="about__bg" aria-hidden="true">
@@ -148,7 +139,7 @@ export default function AboutPage() {
             </div>
 
             {/* ── Approach cards ── */}
-            <div className="about__cards">
+            <div className="about__cards" data-stagger>
                 {APPROACH.map((a, i) => (
                     <div
                         className="about__card"

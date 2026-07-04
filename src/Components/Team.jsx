@@ -331,18 +331,6 @@ const StatCounter = memo(function StatCounter({ target, suffix = "" }) {
 });
 
 export default function TeamSection() {
-    const [visible, setVisible] = useState(false);
-    const sectionRef = useRef(null);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-            { threshold: 0.08 }
-        );
-        if (sectionRef.current) observer.observe(sectionRef.current);
-        return () => observer.disconnect();
-    }, []);
-
     // Memoize stats to prevent recreation on every render
     const stats = useMemo(() => [
         { target: 6, suffix: "", label: "Team Members" },
@@ -353,15 +341,15 @@ export default function TeamSection() {
 
     return (
         <section
-            className={`team${visible ? " team--visible" : ""}`}
-            ref={sectionRef}
+            className="team"
             id="Teams"
+            data-reveal="fade-up"
         >
             {/* Background */}
             <div className="team__bg" aria-hidden="true">
-                <div className="team__bg-blob team__bg-blob--1" />
-                <div className="team__bg-blob team__bg-blob--2" />
-                <div className="team__bg-blob team__bg-blob--3" />
+                <div className="team__bg-blob team__bg-blob--1" data-depth="-0.15" />
+                <div className="team__bg-blob team__bg-blob--2" data-depth="-0.15" />
+                <div className="team__bg-blob team__bg-blob--3" data-depth="-0.15" />
                 <div className="team__bg-grid" />
             </div>
 
@@ -393,7 +381,7 @@ export default function TeamSection() {
             </div>
 
             {/* Grid */}
-            <div className="team__grid">
+            <div className="team__grid" data-stagger>
                 {TEAM.map((member, i) => (
                     <TeamCard key={member.id} member={member} index={i} />
                 ))}

@@ -2,16 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import mockup from "../assets/mockup.png";
 
 export default function HeroPage() {
-    const [visible, setVisible] = useState(false);
     const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
     const heroRef = useRef(null);
     const rafId = useRef(null);
-
-    /* ── Trigger reveal ── */
-    useEffect(() => {
-        const t = setTimeout(() => setVisible(true), 80);
-        return () => clearTimeout(t);
-    }, []);
 
     /* ── Parallax tilt on mockup only — throttle via rAF ── */
     const handleMouseMove = (e) => {
@@ -57,14 +50,15 @@ export default function HeroPage() {
     }
     return (
         <section
-            className={`hero${visible ? " hero--visible" : ""}`}
+            className="hero"
             ref={heroRef}
             onMouseMove={handleMouseMove}
             id="Hero"
+            data-reveal="fade-up"
         >
             {/* ── Background — single radial wash + dot grid ── */}
             <div className="hero__bg" aria-hidden="true">
-                <div className="hero__bg-radial" />
+                <div className="hero__bg-radial" data-depth="-0.15" />
                 <div className="hero__bg-grid" />
             </div>
 
@@ -108,7 +102,7 @@ export default function HeroPage() {
                 <div className="hero__visuals">
 
                     {/* Accent ring — single, static, CSS only */}
-                    <div className="hero__ring" aria-hidden="true" />
+                    <div className="hero__ring" aria-hidden="true" data-depth="-0.25" />
 
                     {/* Mockup with parallax tilt */}
                     <div className="hero__mockup-wrap" style={tiltStyle}>

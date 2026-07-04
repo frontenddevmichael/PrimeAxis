@@ -7,7 +7,6 @@ import AboutPage from "./Components/AboutPage"
 import ServicesPage from "./Components/Service"
 import TeamSection from "./Components/Team"
 import ContactSection from "./Components/ContactPage"
-import CallBooking from "./Components/CallBooking"
 import Footer from "./Components/Footer"
 export default function App() {
   useEffect(() => {
@@ -29,7 +28,7 @@ export default function App() {
       window.dispatchEvent(new Event("scroll"))
     })
 
-    /* Intercept anchor link clicks so Lenis scrolls smoothly */
+    /* ── Intercept anchor link clicks ── */
     function handleAnchorClick(e) {
       const a = e.target.closest("a[href^='#']")
       if (!a) return
@@ -40,7 +39,7 @@ export default function App() {
     }
     document.addEventListener("click", handleAnchorClick)
 
-    /* Button ripple on click */
+    /* ── Button ripple ── */
     function handleRipple(e) {
       const btn = e.target.closest(".btn, .cta, .cf__submit, .btn--contact, .cf__success-reset, .footer__cta, .nav-icon-btn:not(.nav-theme-toggle)")
       if (!btn || btn.closest("[data-no-ripple]")) return
@@ -56,7 +55,7 @@ export default function App() {
     }
     document.addEventListener("click", handleRipple)
 
-    /* Magnetic hover on CTAs */
+    /* ── Magnetic hover ── */
     const magState = new WeakMap()
     function handleMagEnter(e) {
       const el = e.target.closest("[data-magnetic]")
@@ -104,11 +103,54 @@ export default function App() {
 
     window.lenis = lenis
 
+    /* ── Stagger reveal observer — single IO for all [data-reveal] elements ── */
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    let revealObserver, cleanupScroll
+
+    if (!prefersReduced) {
+      revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("revealed")
+              revealObserver.unobserve(entry.target)
+            }
+          })
+        },
+        { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
+      )
+      document.querySelectorAll("[data-reveal]").forEach((el) => revealObserver.observe(el))
+
+      /* ── Parallax scroll — rAF-throttled ── */
+      const depthEls = Array.from(document.querySelectorAll("[data-depth]"))
+      if (depthEls.length) {
+        depthEls.forEach((el) => { el.style.willChange = "transform" })
+        let ticking = false
+        function onScroll() {
+          if (!ticking) {
+            requestAnimationFrame(() => {
+              const scrollY = window.scrollY
+              depthEls.forEach((el) => {
+                const rate = parseFloat(el.dataset.depth) || 0
+                el.style.transform = `translate3d(0, ${scrollY * rate}px, 0)`
+              })
+              ticking = false
+            })
+            ticking = true
+          }
+        }
+        window.addEventListener("scroll", onScroll, { passive: true })
+        cleanupScroll = () => window.removeEventListener("scroll", onScroll)
+      }
+    }
+
     return () => {
       lenis.destroy()
       document.removeEventListener("click", handleAnchorClick)
       document.removeEventListener("click", handleRipple)
       document.removeEventListener("mouseenter", handleMagEnter, true)
+      if (revealObserver) revealObserver.disconnect()
+      if (cleanupScroll) cleanupScroll()
       delete window.lenis
     }
   }, [])
@@ -117,12 +159,13 @@ export default function App() {
     <>
       <a href="#Services" className="skip-link">Skip to content</a>
       <Nav />
-      <HeroPage />
-      <AboutPage />
-      <ServicesPage />
-      <TeamSection />
-      <ContactSection />
-      <CallBooking />
+      <main id="main-content">
+        <HeroPage />
+        <AboutPage />
+        <ServicesPage />
+        <TeamSection />
+        <ContactSection />
+      </main>
       <Footer />
     </>
   )

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 
 /* ─────────────────────────────────────────────────────────
@@ -215,27 +215,18 @@ const SERVICES = {
 ───────────────────────────────────────────────────────── */
 
 export default function ServicesPage() {
-    const [visible, setVisible] = useState(false);
     const [hovered, setHovered] = useState(null);
     const sectionRef = useRef(null);
-
-    useEffect(() => {
-        const io = new IntersectionObserver(
-            ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-            { threshold: 0.06 }
-        );
-        if (sectionRef.current) io.observe(sectionRef.current);
-        return () => io.disconnect();
-    }, []);
 
     const hover = (id) => () => setHovered(id);
     const leave = () => setHovered(null);
 
     return (
         <section
-            className={`services${visible ? " services--visible" : ""}`}
+            className="services"
             ref={sectionRef}
             id="Services"
+            data-reveal="fade-up"
         >
             {/* subtle dot-grid atmosphere */}
             <div className="services__bg" aria-hidden="true">
@@ -255,7 +246,7 @@ export default function ServicesPage() {
                 </header>
 
                 {/* ── BENTO GRID ── */}
-                <div className="svc-bento">
+                <div className="svc-bento" data-stagger>
 
                     {/* ── TILE 01 — Dev (hero, wide) ── */}
                     <article

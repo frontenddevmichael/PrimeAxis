@@ -1,8 +1,3 @@
-
-
-import { useEffect, useRef, useState } from "react";
-
-
 /* ─── Navigation data ─────────────────────────────────────── */
 const NAV = [
     {
@@ -50,24 +45,12 @@ const SOCIAL_ICONS = {
 
 /* ─── Component ───────────────────────────────────────────── */
 export default function FooterSection() {
-    const [visible, setVisible] = useState(false);
-    const footerRef = useRef(null);
-
-    useEffect(() => {
-        const io = new IntersectionObserver(
-            ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-            { threshold: 0.05 }
-        );
-        if (footerRef.current) io.observe(footerRef.current);
-        return () => io.disconnect();
-    }, []);
-
     const year = new Date().getFullYear();
 
     return (
         <footer
-            className={`footer${visible ? " footer--visible" : ""}`}
-            ref={footerRef}
+            className="footer"
+            data-reveal="fade-up"
         >
             {/* CONTENT-AUDIT: add real email address (e.g. hello@primeaxis.tech)
                and real social profile URLs when available. Current hrefs are placeholders. */}

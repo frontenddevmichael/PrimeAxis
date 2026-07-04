@@ -113,8 +113,8 @@
   --duration-instant: 0s;
   --duration-fast:   0.15s;
   --duration-base:   0.25s;
-  --duration-slow:   0.4s;
-  --duration-xslow:  0.65s;
+  --duration-slow:   0.3s;
+  --duration-xslow:  0.3s;
 
   /* Easing curves */
   --ease-out:        cubic-bezier(0.4, 0, 0.2, 1);  /* decelerate — standard enter */
@@ -214,15 +214,15 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
-.dark .call-booking__desc {
+.dark .contact__call-desc {
   color: rgba(255, 255, 255, 0.78);
 }
 
-.dark .call-booking__footnote {
+.dark .contact__call-footnote {
   color: rgba(255, 255, 255, 0.6);
 }
 
-.dark .call-booking__tag {
+.dark .contact__call-tag {
   color: rgba(255, 255, 255, 0.82);
   background: rgba(255, 255, 255, 0.12);
   border-color: rgba(255, 255, 255, 0.2);
@@ -922,31 +922,31 @@ img, video {
   transition: opacity var(--duration-xslow) var(--ease-out), transform var(--duration-xslow) var(--ease-out);
 }
 
-.hero--visible .hero__eyebrow {
+[data-reveal].revealed .hero__eyebrow {
   opacity: 1;
   transform: scale(1);
   transition-delay: calc(var(--stagger-unit) * 1);
 }
 
-.hero--visible .hero__heading {
+[data-reveal].revealed .hero__heading {
   opacity: 1;
   transform: scale(1);
   transition-delay: calc(var(--stagger-unit) * 3);
 }
 
-.hero--visible .hero__body {
+[data-reveal].revealed .hero__body {
   opacity: 1;
   transform: scale(1);
   transition-delay: calc(var(--stagger-unit) * 5);
 }
 
-.hero--visible .hero__stats {
+[data-reveal].revealed .hero__stats {
   opacity: 1;
   transform: scale(1);
   transition-delay: calc(var(--stagger-unit) * 7);
 }
 
-.hero--visible .hero__buttons {
+[data-reveal].revealed .hero__buttons {
   opacity: 1;
   transform: scale(1);
   transition-delay: calc(var(--stagger-unit) * 9);
@@ -960,7 +960,7 @@ img, video {
   transition-delay: calc(var(--stagger-unit) * 4);
 }
 
-.hero--visible .hero__visuals {
+[data-reveal].revealed .hero__visuals {
   opacity: 1;
   transform: scale(1);
 }
@@ -1245,13 +1245,13 @@ img, video {
   transition: opacity var(--duration-slow) var(--ease-out), transform var(--duration-slow) var(--ease-out);
 }
 
-.hero--visible .hero__metric--tl {
+[data-reveal].revealed .hero__metric--tl {
   opacity: 1;
   transform: none;
   transition-delay: 0.9s;
 }
 
-.hero--visible .hero__metric--br {
+[data-reveal].revealed .hero__metric--br {
   opacity: 1;
   transform: none;
   transition-delay: 1.05s;
@@ -1320,7 +1320,7 @@ img, video {
   transition-delay: 1.3s;
 }
 
-.hero--visible .hero__scroll-hint {
+[data-reveal].revealed .hero__scroll-hint {
   opacity: 1;
 }
 
@@ -1506,7 +1506,7 @@ img, video {
 }
 
 /* ───────────────────────────────────────────────────────────
-   STAGGERED REVEAL — driven by .about--visible
+   STAGGERED REVEAL — driven by [data-reveal].revealed
 ─────────────────────────────────────────────────────────── */
 .about__header,
 .about__body,
@@ -1517,25 +1517,25 @@ img, video {
   transition: opacity var(--duration-xslow) var(--ease-out), transform var(--duration-xslow) var(--ease-out);
 }
 
-.about--visible .about__header {
+[data-reveal].revealed .about__header {
   opacity: 1;
   transform: translateY(0) scale(1);
   transition-delay: calc(var(--stagger-unit) * 1);
 }
 
-.about--visible .about__body {
+[data-reveal].revealed .about__body {
   opacity: 1;
   transform: translateY(0) scale(1);
   transition-delay: calc(var(--stagger-unit) * 3);
 }
 
-.about--visible .about__stats {
+[data-reveal].revealed .about__stats {
   opacity: 1;
   transform: translateY(0) scale(1);
   transition-delay: calc(var(--stagger-unit) * 5);
 }
 
-.about--visible .about__cards {
+[data-reveal].revealed .about__cards {
   opacity: 1;
   transform: translateY(0) scale(1);
   transition-delay: calc(var(--stagger-unit) * 7);
@@ -1573,7 +1573,7 @@ img, video {
   transition-delay: calc(var(--stagger-unit) * 5);
 }
 
-.about--visible .about__rule {
+[data-reveal].revealed .about__rule {
   transform: scaleX(1);
 }
 
@@ -1700,7 +1700,7 @@ img, video {
   transition-delay: calc(var(--stagger-unit) * 1 + var(--_stat-delay, 0s));
 }
 
-.about--visible .about__stat {
+[data-reveal].revealed .about__stat {
   opacity: 1;
   transform: translateY(0);
 }
@@ -1897,13 +1897,13 @@ img, video {
   transition: opacity var(--duration-xslow) var(--ease-out), transform var(--duration-xslow) var(--ease-out);
 }
 
-.services--visible .services__header {
+[data-reveal].revealed .services__header {
   opacity: 1;
   transform: scale(1);
   transition-delay: calc(var(--stagger-unit) * 1);
 }
 
-.services--visible .svc-bento {
+[data-reveal].revealed .svc-bento {
   opacity: 1;
   transform: scale(1);
   transition-delay: calc(var(--stagger-unit) * 3);
@@ -1919,37 +1919,37 @@ img, video {
     border-color var(--duration-fast) var(--ease-out);
 }
 
-.services--visible .svc-tile:nth-child(1) {
+[data-reveal].revealed .svc-tile:nth-child(1) {
   opacity: 1;
   transform: scale(1);
   transition-delay: calc(var(--stagger-unit) * 5);
 }
 
-.services--visible .svc-tile:nth-child(2) {
+[data-reveal].revealed .svc-tile:nth-child(2) {
   opacity: 1;
   transform: scale(1);
   transition-delay: calc(var(--stagger-unit) * 7);
 }
 
-.services--visible .svc-tile:nth-child(3) {
+[data-reveal].revealed .svc-tile:nth-child(3) {
   opacity: 1;
   transform: scale(1);
   transition-delay: calc(var(--stagger-unit) * 9);
 }
 
-.services--visible .svc-tile:nth-child(4) {
+[data-reveal].revealed .svc-tile:nth-child(4) {
   opacity: 1;
   transform: scale(1);
   transition-delay: calc(var(--stagger-unit) * 11);
 }
 
-.services--visible .svc-tile:nth-child(5) {
+[data-reveal].revealed .svc-tile:nth-child(5) {
   opacity: 1;
   transform: scale(1);
   transition-delay: calc(var(--stagger-unit) * 13);
 }
 
-.services--visible .svc-tile:nth-child(6) {
+[data-reveal].revealed .svc-tile:nth-child(6) {
   opacity: 1;
   transform: scale(1);
   transition-delay: calc(var(--stagger-unit) * 15);
@@ -2482,25 +2482,25 @@ img, video {
     transform var(--duration-slow) var(--ease-out);
 }
 
-.services--visible .svc-stat__num {
+[data-reveal].revealed .svc-stat__num {
   opacity: 1;
   transform: translateY(0);
   transition-delay: 0.2s;
 }
 
-.services--visible .svc-stat__word {
+[data-reveal].revealed .svc-stat__word {
   opacity: 1;
   transform: translateY(0);
   transition-delay: 0.3s;
 }
 
-.services--visible .svc-stat__rule {
+[data-reveal].revealed .svc-stat__rule {
   opacity: 1;
   transform: translateY(0);
   transition-delay: 0.4s;
 }
 
-.services--visible .svc-stat__sub {
+[data-reveal].revealed .svc-stat__sub {
   opacity: 1;
   transform: translateY(0);
   transition-delay: 0.5s;
@@ -2970,19 +2970,19 @@ img, video {
   transition: opacity var(--duration-xslow) var(--ease-out), transform var(--duration-xslow) var(--ease-out);
 }
 
-.team--visible .team__header {
+[data-reveal].revealed .team__header {
   opacity: 1;
   transform: translateY(0) scale(1);
   transition-delay: calc(var(--stagger-unit) * 1);
 }
 
-.team--visible .team__stats-bar {
+[data-reveal].revealed .team__stats-bar {
   opacity: 1;
   transform: translateY(0) scale(1);
   transition-delay: calc(var(--stagger-unit) * 3);
 }
 
-.team--visible .team__grid {
+[data-reveal].revealed .team__grid {
   opacity: 1;
   transform: translateY(0) scale(1);
   transition-delay: calc(var(--stagger-unit) * 5);
@@ -3073,7 +3073,7 @@ img, video {
   border-right: none;
 }
 
-.team--visible .team__stat {
+[data-reveal].revealed .team__stat {
   opacity: 1;
   transform: translateY(0);
 }
@@ -3101,7 +3101,7 @@ img, video {
   transition-delay: calc(var(--_stat-delay, 0s) + 0.15s);
 }
 
-.team--visible .team__stat-label {
+[data-reveal].revealed .team__stat-label {
   opacity: 1;
 }
 
@@ -3144,7 +3144,7 @@ img, video {
   transition-delay: var(--_stagger-delay, 0s);
 }
 
-.team--visible .team__card {
+[data-reveal].revealed .team__card {
   opacity: 1;
   transform: translateY(0);
 }
@@ -3573,40 +3573,6 @@ img, video {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   REVEAL
-───────────────────────────────────────────────────────────── */
-.contact__panel-content,
-.contact__form-panel {
-  opacity: 0;
-  transform: translateY(24px) scale(0.98);
-  transition: opacity var(--duration-xslow) var(--ease-out), transform var(--duration-xslow) var(--ease-out);
-}
-
-.contact--visible .contact__panel-content {
-  opacity: 1;
-  transform: scale(1);
-  transition-delay: calc(var(--stagger-unit) * 1);
-}
-
-.contact--visible .contact__form-panel {
-  opacity: 1;
-  transform: scale(1);
-  transition-delay: calc(var(--stagger-unit) * 3);
-}
-
-.contact__step {
-  opacity: 0;
-  transform: translateX(-12px);
-  transition: opacity var(--duration-slow) var(--ease-out), transform var(--duration-slow) var(--ease-out);
-  transition-delay: var(--_step-delay, 0s);
-}
-
-.contact--visible .contact__step {
-  opacity: 1;
-  transform: none;
-}
-
-/* ─────────────────────────────────────────────────────────────
    LAYOUT
 ───────────────────────────────────────────────────────────── */
 .contact__layout {
@@ -3621,8 +3587,6 @@ img, video {
   position: relative;
   background: var(--accent-active);
   display: flex;
-  align-items: stretch;
-  overflow: hidden;
   border-right: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -3645,6 +3609,7 @@ img, video {
   flex-direction: column;
   gap: var(--space-8);
   padding: var(--space-16) var(--space-10);
+  flex: 1;
   justify-content: center;
 }
 
@@ -3782,6 +3747,87 @@ img, video {
   font-weight: 700;
   color: rgba(255, 255, 255, 0.85);
   letter-spacing: -0.01em;
+}
+
+/* ── CallBooking merged into left panel ── */
+.contact__call-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-top: var(--space-5);
+}
+
+.contact__call-divider-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.contact__call-divider-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+  flex-shrink: 0;
+}
+
+.contact__call {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.contact__call-tag {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-full);
+  padding: var(--space-1) var(--space-3);
+}
+
+.contact__call-title {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2vw, 28px);
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.contact__call-title em {
+  font-style: italic;
+  background: linear-gradient(120deg, #ffffff 0%, #e3d2fd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.contact__call-desc {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.contact__call-btn {
+  margin-top: var(--space-1);
+  align-self: flex-start;
+}
+
+.contact__call-footnote {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -4493,110 +4539,6 @@ img, video {
 
 
 /* ═══════════════════════════════════════════════════════════════
-   CALL BOOKING — free consultation section
-═══════════════════════════════════════════════════════════════ */
-.call-booking {
-  position: relative;
-  background: var(--accent-active);
-  padding: var(--space-20) var(--space-6);
-  text-align: center;
-  overflow: hidden;
-}
-
-/* Dot-grid atmosphere overlay */
-.call-booking::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(circle, color-mix(in srgb, var(--accent-primary) 12%, transparent) 1.2px, transparent 2px);
-  background-size: 28px 28px;
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 0%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 0%, transparent 100%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.call-booking__inner {
-  position: relative;
-  z-index: 1;
-  max-width: 600px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-5);
-}
-
-.call-booking__inner > * {
-  opacity: 0;
-  transform: translateY(16px) scale(0.98);
-  transition:
-    opacity var(--duration-slow) var(--ease-out),
-    transform var(--duration-slow) var(--ease-out);
-}
-
-.call-booking--visible .call-booking__inner > *:nth-child(1) { transition-delay: calc(var(--stagger-unit) * 1); opacity: 1; transform: scale(1); }
-.call-booking--visible .call-booking__inner > *:nth-child(2) { transition-delay: calc(var(--stagger-unit) * 2); opacity: 1; transform: scale(1); }
-.call-booking--visible .call-booking__inner > *:nth-child(3) { transition-delay: calc(var(--stagger-unit) * 3); opacity: 1; transform: scale(1); }
-.call-booking--visible .call-booking__inner > *:nth-child(4) { transition-delay: calc(var(--stagger-unit) * 4); opacity: 1; transform: scale(1); }
-.call-booking--visible .call-booking__inner > *:nth-child(5) { transition-delay: calc(var(--stagger-unit) * 5); opacity: 1; transform: scale(1); }
-
-.call-booking__tag {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.7);
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: var(--radius-full);
-  padding: var(--space-1) var(--space-4);
-}
-
-.call-booking__title {
-  font-family: var(--font-display);
-  font-size: clamp(28px, 4vw, 44px);
-  font-weight: 700;
-  color: #ffffff;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  margin: 0;
-}
-
-.call-booking__title em {
-  font-style: italic;
-  background: linear-gradient(120deg, #ffffff 0%, #e3d2fd 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.call-booking__desc {
-  font-size: 15px;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.62);
-  line-height: 1.7;
-  max-width: 460px;
-  margin: 0;
-}
-
-.call-booking__btn {
-  margin-top: var(--space-3);
-}
-
-.call-booking__footnote {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.45);
-  margin: 0;
-}
-
-@media (max-width: 600px) {
-  .call-booking {
-    padding: var(--space-14) var(--space-5);
-  }
-}
-
-/* ═══════════════════════════════════════════════════════════════
    ROOT
 ═══════════════════════════════════════════════════════════════ */
 
@@ -4631,24 +4573,24 @@ img, video {
     transform var(--duration-xslow) var(--ease-out);
 }
 
-.footer--visible .footer__brand {
+[data-reveal].revealed .footer__brand {
   opacity: 1;
   transform: scale(1);
   transition-delay: calc(var(--stagger-unit) * 1);
 }
 
-.footer--visible .footer__nav-col {
+[data-reveal].revealed .footer__nav-col {
   opacity: 1;
   transform: scale(1);
   transition-delay: var(--_col-delay, calc(var(--stagger-unit) * 3));
 }
-.footer--visible .footer__wordmark-wrap {
+[data-reveal].revealed .footer__wordmark-wrap {
   opacity: 1;
   transform: scale(1);
   transition-delay: calc(var(--stagger-unit) * 7);
 }
 
-.footer--visible .footer__bar {
+[data-reveal].revealed .footer__bar {
   opacity: 1;
   transform: scale(1);
   transition-delay: calc(var(--stagger-unit) * 9);
@@ -5050,6 +4992,73 @@ img, video {
 .skip-link:focus {
   top: 0;
   outline: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   REVEAL + PARALLAX — scroll-driven entrance and depth
+═══════════════════════════════════════════════════════════════ */
+
+/* All reveal elements start hidden and inert */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--duration-xslow) var(--ease-out), transform var(--duration-xslow) var(--ease-out);
+}
+
+[data-reveal].revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* Direction variants */
+[data-reveal="fade-scale"] {
+  transform: scale(0.95);
+}
+[data-reveal="fade-left"] {
+  transform: translateX(-20px);
+}
+[data-reveal="fade-right"] {
+  transform: translateX(20px);
+}
+
+/* Reverted when revealed — direction variants become identity */
+[data-reveal="fade-scale"].revealed {
+  transform: scale(1);
+}
+[data-reveal="fade-left"].revealed,
+[data-reveal="fade-right"].revealed {
+  transform: translateX(0);
+}
+
+/* Stagger children — triggered when parent or self is revealed */
+[data-stagger] > * {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity var(--duration-xslow) var(--ease-out), transform var(--duration-xslow) var(--ease-out);
+}
+
+[data-reveal].revealed [data-stagger] > *,
+[data-stagger].revealed > * {
+  opacity: 1;
+  transform: none;
+}
+
+[data-stagger] > *:nth-child(1) { transition-delay: calc(var(--stagger-unit) * 1); }
+[data-stagger] > *:nth-child(2) { transition-delay: calc(var(--stagger-unit) * 2); }
+[data-stagger] > *:nth-child(3) { transition-delay: calc(var(--stagger-unit) * 3); }
+[data-stagger] > *:nth-child(4) { transition-delay: calc(var(--stagger-unit) * 4); }
+[data-stagger] > *:nth-child(5) { transition-delay: calc(var(--stagger-unit) * 5); }
+[data-stagger] > *:nth-child(6) { transition-delay: calc(var(--stagger-unit) * 6); }
+[data-stagger] > *:nth-child(7) { transition-delay: calc(var(--stagger-unit) * 7); }
+[data-stagger] > *:nth-child(8) { transition-delay: calc(var(--stagger-unit) * 8); }
+
+/* Reduced motion: reveal all elements fully visible */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-stagger] > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════

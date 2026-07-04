@@ -136,7 +136,7 @@
 
   --text-primary: #f5f0ff;
   --text-secondary: #c4b8e0;
-  --text-muted: #7b7099;
+  --text-muted: #9b8ec2;
 
   /* Lightened for AA contrast (~4.7:1) on near-black */
   --accent-primary: #9d6eff;
@@ -144,8 +144,8 @@
   --accent-hover: #7d3fe0;
   --accent-active: #7c3aed;
 
-  --accent-subtle: rgba(106, 0, 244, 0.22);
-  --accent-border: rgba(106, 0, 244, 0.28);
+  --accent-subtle: rgba(157, 110, 255, 0.32);
+  --accent-border: rgba(157, 110, 255, 0.28);
 
   --surface-elevated: #1a1430;
   --surface-elevated-border: rgba(106, 0, 244, 0.28);
@@ -186,8 +186,51 @@
   border-color: rgba(106, 0, 244, 0.2);
 }
 
-.dark .team__role {
-  color: var(--accent-primary);
+.dark .team {
+  --_accent-engineering: var(--accent-primary);
+  --_accent-design: #a78bfa;
+  --_accent-marketing: #34d399;
+}
+
+/* Dark mode: higher white opacities on lighter --accent-active (#7c3aed) bg */
+.dark .services__subtitle {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.dark .contact__eyebrow {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.dark .contact__panel-body,
+.dark .contact__step-desc {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.dark .contact__detail-label {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.dark .contact__detail-value {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.dark .call-booking__desc {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.dark .call-booking__footnote {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.dark .call-booking__tag {
+  color: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.dark .footer {
+  --_white-mid: rgba(255, 255, 255, 0.82);
+  --_white-low: rgba(255, 255, 255, 0.78);
 }
 
 /* ───────────────────────────────────────────────────────────
@@ -2820,8 +2863,8 @@ img, video {
 
   /* Discipline accent colors */
   --_accent-engineering: var(--accent-active);
-  --_accent-design: #a78bfa;
-  --_accent-marketing: #34d399;
+  --_accent-design: #7c3aed;
+  --_accent-marketing: #059669;
 
   position: relative;
   background: var(--bg-elevated);
@@ -3841,7 +3884,6 @@ img, video {
 .cf__textarea::placeholder {
   color: var(--text-muted);
   font-weight: 300;
-  opacity: 0.7;
 }
 
 .cf__input:hover,
@@ -3923,11 +3965,15 @@ img, video {
 ───────────────────────────────────────────────────────────── */
 .cf__error {
   font-size: 11.5px;
-  color: #f04438;
+  color: #c0392b;
   display: flex;
   align-items: center;
   gap: 4px;
   animation: cf-shake 0.28s ease;
+}
+
+.dark .cf__error {
+  color: #ff6b6b;
 }
 
 .cf__error::before {

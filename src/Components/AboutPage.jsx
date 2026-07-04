@@ -134,7 +134,7 @@ export default function AboutPage() {
             {/* ── Proof stats ── */}
             <div className="about__stats">
                 <div className="about__stat" style={{ "--_stat-delay": "calc(var(--stagger-unit) * 1)" }}>
-                    <CountUp target={50} suffix="+" />
+                    <CountUp target={10} />
                     <span className="about__stat-label">Projects Delivered</span>
                 </div>
                 <div className="about__stat" style={{ "--_stat-delay": "calc(var(--stagger-unit) * 2)" }}>

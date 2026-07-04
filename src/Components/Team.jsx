@@ -5,6 +5,7 @@ import Ose from "../assets/Ose.jpeg";
 import Omale from "../assets/Omale.jpeg";
 import Tumise from "../assets/Tumise.jpeg";
 import Ola from "../assets/Ola.jpeg"
+/* CONTENT-AUDIT: Photos range 43KB–2273KB, inconsistent resolution. Re-export all at 600×600px, ~80% JPEG quality. */
 
 const TEAM = [
     {
@@ -45,7 +46,7 @@ const TEAM = [
     },
     {
         id: "sopein-tummise",
-        name: "Sopein Tummise",
+        name: "Sopein Tumise", /* CONTENT-AUDIT: confirm spelling — double-check with team member */
         role: "Social Media Strategist",
         type: "marketing",
         signature: "Attention is earned, not bought.",
@@ -135,8 +136,8 @@ const TeamCard = memo(function TeamCard({ member, index }) {
 
             setSpotlightPos({ x: x * 100, y: y * 100 });
             setTilt({
-                x: (y - 0.5) * -10,
-                y: (x - 0.5) * 10,
+                x: (y - 0.5) * -3,
+                y: (x - 0.5) * 3,
             });
 
             rafId.current = null;
@@ -174,7 +175,7 @@ const TeamCard = memo(function TeamCard({ member, index }) {
                 .filter(Boolean)
                 .join(" ")}
             style={{
-                "--_stagger-delay": `${0.08 + index * 0.09}s`,
+                "--_stagger-delay": `calc(var(--stagger-unit) * ${index + 2})`,
                 "--_tilt-x": `${tilt.x}deg`,
                 "--_tilt-y": `${tilt.y}deg`,
             }}
@@ -236,7 +237,7 @@ const TeamCard = memo(function TeamCard({ member, index }) {
                             <span
                                 className="team__skill"
                                 key={s}
-                                style={{ "--_skill-delay": `${i * 0.07}s` }}
+                                style={{ "--_skill-delay": `calc(var(--stagger-unit) * ${i})` }}
                             >
                                 {s}
                             </span>
@@ -368,7 +369,7 @@ export default function TeamSection() {
                     <div
                         className="team__stat"
                         key={stat.label}
-                        style={{ "--_stat-delay": `${0.3 + i * 0.08}s` }}
+                        style={{ "--_stat-delay": `calc(var(--stagger-unit) * ${i + 2})` }}
                     >
                         <StatCounter target={stat.target} suffix={stat.suffix} />
                         <span className="team__stat-label">{stat.label}</span>

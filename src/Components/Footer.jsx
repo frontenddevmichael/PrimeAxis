@@ -18,8 +18,8 @@ const NAV = [
         heading: "Company",
         links: [
             { label: "About Us", href: "#About" },
-            { label: "Our Work", href: "#work" },
-            { label: "The team", href: "#Team" },
+            { label: "Our Work", href: "#Services" },
+            { label: "The team", href: "#Teams" },
             { label: "Contact", href: "#Contact" },
         ],
     },
@@ -36,8 +36,8 @@ const NAV = [
         links: [
             { label: "Twitter / X", href: "#twitter" },
             { label: "LinkedIn", href: "#linkedin" },
-            { label: "Facebook", href: "#github" },
-            { label: "Instagram", href: "#dribbble" },
+            { label: "Facebook", href: "#facebook" },
+            { label: "Instagram", href: "#instagram" },
         ],
     },
 ];
@@ -68,58 +68,8 @@ export default function FooterSection() {
             className={`footer${visible ? " footer--visible" : ""}`}
             ref={footerRef}
         >
-            {/* ── Architectural SVG canvas ── */}
-            <div className="footer__canvas" aria-hidden="true">
-                <svg
-                    className="footer__canvas-svg"
-                    viewBox="0 0 1200 520"
-                    fill="none"
-                    preserveAspectRatio="xMidYMid slice"
-                >
-                    {/* Fine horizontal rule grid — top half only */}
-                    {Array.from({ length: 8 }, (_, i) => (
-                        <line key={`h${i}`}
-                            x1="0" y1={60 + i * 38} x2="1200" y2={60 + i * 38}
-                            stroke="rgba(255,255,255,0.035)" strokeWidth="0.6"
-                        />
-                    ))}
-                    {/* Vertical columns */}
-                    {Array.from({ length: 16 }, (_, i) => (
-                        <line key={`v${i}`}
-                            x1={i * 80} y1="0" x2={i * 80} y2="340"
-                            stroke="rgba(255,255,255,0.025)" strokeWidth="0.5"
-                        />
-                    ))}
-                    {/* Large open circle — bottom right quadrant */}
-                    <circle cx="1080" cy="400" r="320"
-                        stroke="rgba(255,255,255,0.05)" strokeWidth="0.8" />
-                    <circle cx="1080" cy="400" r="220"
-                        stroke="rgba(255,255,255,0.04)" strokeWidth="0.6"
-                        strokeDasharray="5 12">
-                        <animateTransform attributeName="transform" type="rotate"
-                            from="0 1080 400" to="-360 1080 400"
-                            dur="50s" repeatCount="indefinite" />
-                    </circle>
-                    <circle cx="1080" cy="400" r="120"
-                        stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
-                    {/* Diagonal accent lines — bottom left */}
-                    <line x1="0" y1="340" x2="160" y2="520"
-                        stroke="rgba(196,122,255,0.12)" strokeWidth="1" />
-                    <line x1="28" y1="340" x2="188" y2="520"
-                        stroke="rgba(196,122,255,0.06)" strokeWidth="0.6" />
-                    {/* Dot cluster — top left accent */}
-                    {[0, 14, 28].map(ox =>
-                        [0, 14, 28].map(oy => (
-                            <circle key={`d${ox}${oy}`}
-                                cx={64 + ox} cy={64 + oy} r="1.4"
-                                fill="rgba(255,255,255,0.14)" />
-                        ))
-                    )}
-                    {/* Horizontal accent rule — below upper zone */}
-                    <line x1="0" y1="330" x2="1200" y2="330"
-                        stroke="rgba(255,255,255,0.06)" strokeWidth="0.6" />
-                </svg>
-            </div>
+            {/* CONTENT-AUDIT: add real email address (e.g. hello@primeaxis.tech)
+               and real social profile URLs when available. Current hrefs are placeholders. */}
 
             {/* ════════════════════════════════════════
           ZONE 1 — Upper: tagline + nav columns
@@ -142,7 +92,7 @@ export default function FooterSection() {
                         foundations<br />growing companies stand on.
                     </p>
 
-                    <a href="#contact" className="footer__cta">
+                    <a href="#Contact" className="footer__cta">
                         Start a Project
                         <span className="footer__cta-arrow" aria-hidden="true">↗</span>
                     </a>
@@ -152,7 +102,7 @@ export default function FooterSection() {
                 <nav className="footer__nav" aria-label="Footer navigation">
                     {NAV.map((col, ci) => (
                         <div key={col.heading} className="footer__nav-col"
-                            style={{ transitionDelay: `${0.15 + ci * 0.08}s` }}>
+                            style={{ "--_col-delay": `calc(var(--stagger-unit) * ${ci + 2})` }}>
                             <h3 className="footer__nav-heading">{col.heading}</h3>
                             <ul className="footer__nav-list">
                                 {col.links.map((link) => (

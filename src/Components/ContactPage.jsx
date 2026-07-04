@@ -1,10 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import emailjs from "@emailjs/browser";
 
-/* ─── EmailJS Config ──────────────────────────────────────── */
-const EJS_PUBLIC_KEY = "vBFrPcNY_80UVv0u4";
-const EJS_SERVICE_ID = "service_g9opurp";
-const EJS_TEMPLATE_ID = "template_s6dogng";
+/* ─── WhatsApp Config ──────────────────────────────────────── */
+const WHATSAPP_PROJECT = "2349061712509";
 
 /* ─── Constants ───────────────────────────────────────────── */
 const PROJECT_TYPES = [
@@ -41,9 +38,9 @@ function validate(data) {
 }
 
 /* ─── Sub-components ──────────────────────────────────────── */
-function FieldError({ msg }) {
+function FieldError({ msg, id }) {
     if (!msg) return null;
-    return <span className="cf__error" role="alert">{msg}</span>;
+    return <span id={id} className="cf__error" role="alert">{msg}</span>;
 }
 
 function SelectWrap({ children }) {
@@ -52,7 +49,7 @@ function SelectWrap({ children }) {
 
 function SuccessScreen({ onReset }) {
     return (
-        <div className="cf__success">
+        <div className="cf__success" role="status" aria-live="polite">
             <div className="cf__success-mark" aria-hidden="true">
                 <svg viewBox="0 0 48 48" fill="none">
                     <circle cx="24" cy="24" r="23" stroke="var(--accent-primary)" strokeWidth="1.5" />
@@ -60,10 +57,10 @@ function SuccessScreen({ onReset }) {
                         strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
             </div>
-            <h3 className="cf__success-title">Brief Received</h3>
+            <h3 className="cf__success-title">Brief Sent via WhatsApp</h3>
             <p className="cf__success-body">
-                Thanks for reaching out. We've logged your project and will
-                be in touch within 24 hours with a focused plan.
+                Thanks for reaching out. Your project details have been sent
+                to our team — we'll respond within 24 hours with a focused plan.
             </p>
             <button className="cf__success-reset" onClick={onReset}>
                 Submit another project ↗
@@ -77,16 +74,19 @@ export default function ContactSection() {
     const [form, setForm] = useState(INITIAL_FORM);
     const [errors, setErrors] = useState({});
     const [status, setStatus] = useState("idle");
-    const [apiError, setApiError] = useState("");
     const [visible, setVisible] = useState(false);
 
     const sectionRef = useRef(null);
+    const formRef = useRef(null);
     const submitting = useRef(false);
 
-    /* Initialise EmailJS once on mount */
+    /* Focus first errored field on validation failure */
     useEffect(() => {
-        emailjs.init(EJS_PUBLIC_KEY);
-    }, []);
+        const keys = Object.keys(errors);
+        if (keys.length === 0) return;
+        const firstField = formRef.current?.querySelector(`[aria-invalid="true"]`);
+        if (firstField) firstField.focus();
+    }, [errors]);
 
     /* Intersection observer reveal */
     useEffect(() => {
@@ -103,7 +103,7 @@ export default function ContactSection() {
         if (errors[key]) setErrors(prev => { const n = { ...prev }; delete n[key]; return n; });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         if (submitting.current) return;
 
@@ -111,34 +111,23 @@ export default function ContactSection() {
         if (Object.keys(errs).length) { setErrors(errs); return; }
 
         submitting.current = true;
-        setStatus("loading");
-        setApiError("");
 
-        /* Template variables — must match your EmailJS template exactly */
-        const templateParams = {
-            name: form.name,
-            email: form.email,
-            company: form.company || "N/A",
-            projectType: form.projectType,
-            budget: form.budget,
-            timeline: form.timeline || "Not specified",
-            description: form.description,
-        };
+        const msg = encodeURIComponent(
+            `*New Project Inquiry — PrimeAxis*\n\n` +
+            `Name: ${form.name}\n` +
+            `Email: ${form.email}\n` +
+            `Company: ${form.company || "N/A"}\n` +
+            `Project Type: ${form.projectType}\n` +
+            `Budget: ${form.budget}\n` +
+            `Timeline: ${form.timeline || "Not specified"}\n` +
+            `Description: ${form.description}`
+        );
 
-        try {
-            await emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, templateParams);
-            setStatus("success");
-            setForm(INITIAL_FORM);
-        } catch (err) {
-            const msg =
-                err?.text ||
-                err?.message ||
-                "Something went wrong. Please try again.";
-            setApiError(msg);
-            setStatus("error");
-        } finally {
-            submitting.current = false;
-        }
+        window.open(`https://wa.me/${WHATSAPP_PROJECT}?text=${msg}`, "_blank");
+
+        setStatus("success");
+        setForm(INITIAL_FORM);
+        submitting.current = false;
     };
 
     const handleReset = () => {
@@ -154,45 +143,7 @@ export default function ContactSection() {
             ref={sectionRef}
             id="Contact"
         >
-            {/* ── Architectural SVG canvas — dark panel only ── */}
-            <div className="contact__canvas" aria-hidden="true">
-                <svg className="contact__canvas-svg" viewBox="0 0 560 720"
-                    fill="none" preserveAspectRatio="xMidYMid slice">
-                    <circle cx="280" cy="360" r="260"
-                        stroke="rgba(255,255,255,0.07)" strokeWidth="1" />
-                    <circle cx="280" cy="360" r="180"
-                        stroke="rgba(255,255,255,0.05)" strokeWidth="0.8"
-                        strokeDasharray="6 10">
-                        <animateTransform attributeName="transform" type="rotate"
-                            from="0 280 360" to="360 280 360" dur="40s" repeatCount="indefinite" />
-                    </circle>
-                    <circle cx="280" cy="360" r="100"
-                        stroke="rgba(255,255,255,0.04)" strokeWidth="0.6" />
-                    {Array.from({ length: 10 }, (_, i) => (
-                        <line key={`h${i}`}
-                            x1="0" y1={40 + i * 22} x2="560" y2={40 + i * 22}
-                            stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" />
-                    ))}
-                    {Array.from({ length: 14 }, (_, i) => (
-                        <line key={`v${i}`}
-                            x1={i * 40} y1="0" x2={i * 40} y2="260"
-                            stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" />
-                    ))}
-                    <line x1="0" y1="540" x2="200" y2="720"
-                        stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-                    <line x1="30" y1="540" x2="230" y2="720"
-                        stroke="rgba(255,255,255,0.03)" strokeWidth="0.6" />
-                    {[0, 12, 24].map(ox => [0, 12, 24].map(oy => (
-                        <circle key={`${ox}${oy}`}
-                            cx={480 + ox} cy={60 + oy} r="1.5"
-                            fill="rgba(255,255,255,0.12)" />
-                    )))}
-                    <line x1="48" y1="680" x2="260" y2="680"
-                        stroke="rgba(196,122,255,0.25)" strokeWidth="1" />
-                    <circle cx="48" cy="680" r="3"
-                        fill="rgba(196,122,255,0.4)" />
-                </svg>
-            </div>
+
 
             <div className="contact__layout">
 
@@ -212,7 +163,7 @@ export default function ContactSection() {
                         <ol className="contact__process" aria-label="Our process">
                             {PROCESS_STEPS.map((step, i) => (
                                 <li key={step.num} className="contact__step"
-                                    style={{ transitionDelay: `${0.4 + i * 0.1}s` }}>
+                                    style={{ "--_step-delay": `calc(var(--stagger-unit) * ${i + 2})` }}>
                                     <div className="contact__step-num">{step.num}</div>
                                     <div className="contact__step-body">
                                         <strong className="contact__step-title">{step.title}</strong>
@@ -233,7 +184,7 @@ export default function ContactSection() {
                     {status === "success" ? (
                         <SuccessScreen onReset={handleReset} />
                     ) : (
-                        <form className="contact__form" onSubmit={handleSubmit} noValidate>
+                        <form className="contact__form" onSubmit={handleSubmit} noValidate ref={formRef}>
 
                             <div className="contact__form-header">
                                 <h3 className="contact__form-title">Project Brief</h3>
@@ -251,8 +202,10 @@ export default function ContactSection() {
                                     <input id="cf-name" className={cls("cf__input", "name")}
                                         type="text" placeholder="Jane Smith"
                                         value={form.name} onChange={handleChange("name")}
-                                        autoComplete="name" />
-                                    <FieldError msg={errors.name} />
+                                        autoComplete="name"
+                                        aria-invalid={!!errors.name}
+                                        aria-describedby={errors.name ? "cf-name-error" : undefined} />
+                                    <FieldError msg={errors.name} id="cf-name-error" />
                                 </div>
 
                                 <div className="cf__field">
@@ -262,8 +215,10 @@ export default function ContactSection() {
                                     <input id="cf-email" className={cls("cf__input", "email")}
                                         type="email" placeholder="jane@company.com"
                                         value={form.email} onChange={handleChange("email")}
-                                        autoComplete="email" />
-                                    <FieldError msg={errors.email} />
+                                        autoComplete="email"
+                                        aria-invalid={!!errors.email}
+                                        aria-describedby={errors.email ? "cf-email-error" : undefined} />
+                                    <FieldError msg={errors.email} id="cf-email-error" />
                                 </div>
 
                                 <div className="cf__field">
@@ -272,12 +227,14 @@ export default function ContactSection() {
                                     </label>
                                     <SelectWrap>
                                         <select id="cf-type" className={cls("cf__select", "projectType")}
-                                            value={form.projectType} onChange={handleChange("projectType")}>
+                                            value={form.projectType} onChange={handleChange("projectType")}
+                                            aria-invalid={!!errors.projectType}
+                                            aria-describedby={errors.projectType ? "cf-projectType-error" : undefined}>
                                             <option value="">Select type…</option>
                                             {PROJECT_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
                                         </select>
                                     </SelectWrap>
-                                    <FieldError msg={errors.projectType} />
+                                    <FieldError msg={errors.projectType} id="cf-projectType-error" />
                                 </div>
 
                                 <div className="cf__field">
@@ -286,12 +243,14 @@ export default function ContactSection() {
                                     </label>
                                     <SelectWrap>
                                         <select id="cf-budget" className={cls("cf__select", "budget")}
-                                            value={form.budget} onChange={handleChange("budget")}>
+                                            value={form.budget} onChange={handleChange("budget")}
+                                            aria-invalid={!!errors.budget}
+                                            aria-describedby={errors.budget ? "cf-budget-error" : undefined}>
                                             <option value="">Select budget…</option>
                                             {BUDGET_RANGES.map(b => <option key={b} value={b}>{b}</option>)}
                                         </select>
                                     </SelectWrap>
-                                    <FieldError msg={errors.budget} />
+                                    <FieldError msg={errors.budget} id="cf-budget-error" />
                                 </div>
 
                                 <div className="cf__field cf__field--full">
@@ -301,8 +260,10 @@ export default function ContactSection() {
                                     <textarea id="cf-desc" className={cls("cf__textarea", "description")}
                                         placeholder="Describe your project, goals, and any specific requirements…"
                                         value={form.description} onChange={handleChange("description")}
-                                        rows={4} />
-                                    <FieldError msg={errors.description} />
+                                        rows={4}
+                                        aria-invalid={!!errors.description}
+                                        aria-describedby={errors.description ? "cf-description-error" : undefined} />
+                                    <FieldError msg={errors.description} id="cf-description-error" />
                                 </div>
 
                             </div>
@@ -334,23 +295,18 @@ export default function ContactSection() {
                                 </div>
                             </div>
 
-                            {status === "error" && apiError && (
-                                <div className="cf__api-error" role="alert">⚠ {apiError}</div>
+                            {status === "error" && (
+                                <div className="cf__api-error" role="alert">Something went wrong. Please try again.</div>
                             )}
 
                             <button
                                 type="submit"
-                                disabled={status === "loading"}
-                                className={`cf__submit${status === "error" ? " cf__submit--err" : ""}`}
+                                className="cf__submit"
                             >
-                                {status === "loading" ? (
-                                    <><span className="cf__spinner" aria-hidden="true" />Sending…</>
-                                ) : status === "error" ? (
-                                    <>↺ Try Again</>
-                                ) : (
-                                    <>Send Project Brief <span className="cf__submit-arrow">↗</span></>
-                                )}
+                                Send via WhatsApp <span className="cf__submit-arrow">↗</span>
                             </button>
+
+                            <p className="cf__trust">We'll respond with a focused plan within 24 hours.</p>
 
                         </form>
                     )}

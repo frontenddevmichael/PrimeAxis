@@ -7,7 +7,8 @@ import { useEffect, useRef, useState } from "react";
 
 /** Terminal window — Custom Web & App Dev */
 const DevGraphic = () => (
-    <svg className="svc-tile__graphic" viewBox="0 0 200 128" fill="none" aria-hidden="true">
+    <svg className="svc-tile__graphic" viewBox="0 0 200 128" fill="none" role="img" aria-label="Terminal window depicting Custom Web and App Development">
+
         {/* window shell — slightly tinted so it reads against white card */}
         <rect width="200" height="128" rx="10" fill="#f0ecfb" stroke="#d5c8f5" strokeWidth="1" />
         <rect width="200" height="26" rx="10" fill="#e8e0f8" />
@@ -45,8 +46,8 @@ const DevGraphic = () => (
 
 /** Launch arc — Digital Product Dev */
 const ProductGraphic = () => (
-    <svg className="svc-tile__graphic" viewBox="0 0 150 190" fill="none" aria-hidden="true">
-        {/* dashed guide path */}
+    <svg className="svc-tile__graphic" viewBox="0 0 150 190" fill="none" role="img" aria-label="Launch arc illustration for Digital Product Development">
+
         <path d="M 18 172 Q 75 86 132 12" stroke="#c9baee" strokeWidth="1.2" strokeDasharray="4 5" />
         {/* animated purple streak */}
         <path d="M 18 172 Q 75 86 132 12" stroke="#6A00F4" strokeWidth="2" strokeDasharray="58 220" strokeOpacity="0.5">
@@ -72,7 +73,7 @@ const ProductGraphic = () => (
 
 /** Before → After browser — Redesign */
 const RedesignGraphic = () => (
-    <svg className="svc-tile__graphic" viewBox="0 0 274 92" fill="none" aria-hidden="true">
+    <svg className="svc-tile__graphic" viewBox="0 0 274 92" fill="none" role="img" aria-label="Before and after browser comparison for redesign and performance optimisation">
         {/* ── BEFORE ── */}
         <rect width="114" height="92" rx="7" fill="#f0ecfb" stroke="#c9baee" strokeWidth="1" />
         <rect width="114" height="22" rx="7" fill="#e4dcf7" />
@@ -117,7 +118,7 @@ const RedesignGraphic = () => (
 
 /** Wireframe → UI — UX Design */
 const UXGraphic = () => (
-    <svg className="svc-tile__graphic" viewBox="0 0 270 92" fill="none" aria-hidden="true">
+    <svg className="svc-tile__graphic" viewBox="0 0 270 92" fill="none" role="img" aria-label="Wireframe to final UI illustration for UX Design and product strategy">
         {/* ── WIREFRAME ── */}
         <rect width="118" height="92" rx="7" fill="#f0ecfb" stroke="#c9baee" strokeWidth="1" />
         <rect x="6" y="6" width="106" height="20" rx="3" fill="none" stroke="#c9baee" strokeWidth="1" strokeDasharray="3 3" />
@@ -204,7 +205,7 @@ const SERVICES = {
         num: "05",
         tag: "Strategy",
         title: "UI/UX Design & Product Strategy",
-        desc: "We think before we build. Interface design and journey mapping that keeps products purposeful.",
+        desc: "Every pixel validated by user behaviour, not intuition. We map, test, refine, then build — so your product works before it ships.",
         points: ["Interface design", "Prototyping", "User journey mapping", "Feature structuring"],
     },
 };
@@ -313,7 +314,6 @@ export default function ServicesPage() {
                         <div className="svc-tile__graphic-wrap svc-tile__graphic-wrap--product">
                             <ProductGraphic />
                         </div>
-                        {/* stat badge */}
                     </article>
 
                     {/* ── STAT TILE — pure typographic accent ── */}
@@ -388,12 +388,7 @@ export default function ServicesPage() {
 
                     {/* ── CTA TILE — full width ── */}
                     <div className="svc-tile svc-tile--cta">
-                        {/* decorative sine waves */}
-                        <svg className="svc-cta__deco" viewBox="0 0 900 130" preserveAspectRatio="none" fill="none" aria-hidden="true">
-                            <path d="M0 65 Q225 20 450 65 Q675 110 900 65" stroke="#6A00F4" strokeWidth="1.2" strokeOpacity="0.1" />
-                            <path d="M0 65 Q225 110 450 65 Q675 20 900 65" stroke="#9B00D9" strokeWidth="1" strokeOpacity="0.07" />
-                            <path d="M0 45 Q225 0 450 45 Q675 90 900 45" stroke="#6A00F4" strokeWidth="0.8" strokeOpacity="0.06" />
-                        </svg>
+    
                         <div className="svc-cta__inner">
                             <div className="svc-cta__text">
                                 <p className="svc-cta__mono">// let's build something</p>
@@ -401,8 +396,14 @@ export default function ServicesPage() {
                                 <p className="svc-cta__sub">Tell us what you're trying to build. We'll figure out the rest.</p>
                             </div>
                             <div className="svc-cta__actions">
-                                <button className="btn btn--gradient">Start a Project</button>
-                                <button className="btn btn--outline">Book a Free Call</button>
+                                <button className="btn btn--gradient"
+                                    onClick={() => document.getElementById("Contact").scrollIntoView({ behavior: "smooth" })}>
+                                    Start a Project
+                                </button>
+                                <button className="btn btn--outline"
+                                    onClick={() => window.open("https://wa.me/2349164300395?text=Hello%21%20I%27d%20like%20to%20book%20a%20free%20consultation%20with%20PrimeAxis.", "_blank")}>
+                                    Book a Free Call
+                                </button>
                             </div>
                         </div>
                     </div>

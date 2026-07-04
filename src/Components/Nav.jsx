@@ -58,6 +58,7 @@ export default function Nav() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [hidden, setHidden] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [activeSection, setActiveSection] = useState("Home");
 
     /* ===========================
        Theme Sync
@@ -98,12 +99,37 @@ export default function Nav() {
     }, []);
 
     /* ===========================
+       Scroll-spy — active nav link
+    ============================ */
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.id;
+                        const match = NAV_LINKS.find((link) => link.href === `#${id}`);
+                        if (match) setActiveSection(match.label);
+                    }
+                });
+            },
+            { threshold: 0.3, rootMargin: "-80px 0px 0px 0px" }
+        );
+
+        NAV_LINKS.forEach(({ href }) => {
+            const el = document.querySelector(href);
+            if (el) observer.observe(el);
+        });
+
+        return () => observer.disconnect();
+    }, []);
+
+    /* ===========================
        Outside Click Close
     ============================ */
     useEffect(() => {
         if (!menuOpen) return;
 
-        const handler = (e) => {
+        const outsideClick = (e) => {
             if (
                 navRef.current &&
                 !navRef.current.contains(e.target) &&
@@ -114,8 +140,16 @@ export default function Nav() {
             }
         };
 
-        document.addEventListener("mousedown", handler);
-        return () => document.removeEventListener("mousedown", handler);
+        const escapeKey = (e) => {
+            if (e.key === "Escape") setMenuOpen(false);
+        };
+
+        document.addEventListener("mousedown", outsideClick);
+        document.addEventListener("keydown", escapeKey);
+        return () => {
+            document.removeEventListener("mousedown", outsideClick);
+            document.removeEventListener("keydown", escapeKey);
+        };
     }, [menuOpen]);
 
     /* ===========================
@@ -155,11 +189,14 @@ export default function Nav() {
                 </div>
 
                 {/* Desktop Links */}
-                <div className="navLink-container glass">
+                <div className="navLink-container">
                     <ul className="nav-links">
                         {NAV_LINKS.map((link) => (
                             <li key={link.label}>
-                                <a href={link.href} className="nav-link">
+                                <a
+                                    href={link.href}
+                                    className={`nav-link${activeSection === link.label ? " active" : ""}`}
+                                >
                                     {link.label}
                                 </a>
                             </li>
@@ -216,7 +253,7 @@ export default function Nav() {
                         <li
                             key={link.label}
                             className="nav-mobile__item"
-                            style={{ "--_item-delay": `${i * 0.06}s` }}
+                            style={{ "--_i": i }}
                         >
                             <a
                                 href={link.href}

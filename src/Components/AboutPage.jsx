@@ -56,17 +56,16 @@ export default function AboutPage() {
             <div className="about__body">
                 <div className="about__pull">
                     <blockquote className="about__quote">
-                        We build technology that solves real business problems.
+                        We've shipped production systems for startups stepping into enterprise — and every line of code was written by engineers who still review each other's pull requests.
                     </blockquote>
-                  
-                </div>
+                  </div>
 
                 <div className="about__copy">
                     <p>
-                        PrimeAxis is a technology-focused digital solutions company that builds
-                        scalable systems for modern businesses and startups. We specialize in
-                        transforming ideas into reliable, production-ready products through clean
-                        engineering, strategic product thinking, and structured development processes.
+                        PrimeAxis is a remote-first engineering studio that partners with
+                        growing companies to design, build, and scale the systems their
+                        business runs on. We don't template — we architect. Every project
+                        is treated as a product, not a ticket.
                     </p>
                     <p>
                         Our approach goes beyond writing code — we design systems that automate
@@ -79,13 +78,29 @@ export default function AboutPage() {
 
 
 
+            {/* ── Proof stats ── */}
+            <div className="about__stats">
+                <div className="about__stat">
+                    <span className="about__stat-num">50+</span>
+                    <span className="about__stat-label">Projects Delivered</span>
+                </div>
+                <div className="about__stat">
+                    <span className="about__stat-num">6</span>
+                    <span className="about__stat-label">Team Members</span>
+                </div>
+                <div className="about__stat">
+                    <span className="about__stat-num">≤24hr</span>
+                    <span className="about__stat-label">Response Time</span>
+                </div>
+            </div>
+
             {/* ── Approach cards ── */}
             <div className="about__cards">
                 {APPROACH.map((a, i) => (
                     <div
                         className="about__card"
                         key={a.num}
-                        style={{ transitionDelay: `${0.3 + i * 0.1}s` }}
+                        style={{ transitionDelay: `calc(var(--stagger-unit) * ${i + 5})` }}
                     >
                         <span className="about__card-num">{a.num}</span>
                         <h3 className="about__card-name">{a.name}</h3>

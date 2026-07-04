@@ -5,6 +5,7 @@ import AboutPage from "./Components/AboutPage"
 import ServicesPage from "./Components/Service"
 import TeamSection from "./Components/Team"
 import ContactSection from "./Components/ContactPage"
+import CallBooking from "./Components/CallBooking"
 import Footer from "./Components/Footer"
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
       <ServicesPage />
       <TeamSection />
       <ContactSection />
+      <CallBooking />
       <Footer />
     </>
   )

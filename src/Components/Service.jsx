@@ -396,11 +396,15 @@ export default function ServicesPage() {
                                 <p className="svc-cta__sub">Tell us what you're trying to build. We'll figure out the rest.</p>
                             </div>
                             <div className="svc-cta__actions">
-                                <button className="btn btn--gradient"
-                                    onClick={() => document.getElementById("Contact").scrollIntoView({ behavior: "smooth" })}>
+                                <button className="btn btn--gradient" data-magnetic
+                                    onClick={() => {
+                                        const el = document.getElementById("Contact");
+                                        if (window.lenis) window.lenis.scrollTo(el);
+                                        else el.scrollIntoView({ behavior: "smooth" });
+                                    }}>
                                     Start a Project
                                 </button>
-                                <button className="btn btn--outline"
+                                <button className="btn btn--outline" data-magnetic
                                     onClick={() => window.open("https://wa.me/2349164300395?text=Hello%21%20I%27d%20like%20to%20book%20a%20free%20consultation%20with%20PrimeAxis.", "_blank")}>
                                     Book a Free Call
                                 </button>

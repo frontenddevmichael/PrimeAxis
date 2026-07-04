@@ -33,6 +33,7 @@ export default function CallBooking() {
                     href="https://wa.me/2349164300395?text=Hello!%20I'd%20like%20to%20book%20a%20free%20consultation%20with%20PrimeAxis."
                     target="_blank"
                     rel="noopener noreferrer"
+                    data-magnetic
                 >
                     Book a Free Call <span className="btn__arrow" aria-hidden="true">↗</span>
                 </a>

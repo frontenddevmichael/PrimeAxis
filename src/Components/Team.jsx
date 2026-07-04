@@ -5,6 +5,7 @@ import Ose from "../assets/Ose.jpeg";
 import Omale from "../assets/Omale.jpeg";
 import Tumise from "../assets/Tumise.jpeg";
 import Ola from "../assets/Ola.jpeg"
+import BlurImage from "./BlurImage"
 /* CONTENT-AUDIT: Photos range 43KB–2273KB, inconsistent resolution. Re-export all at 600×600px, ~80% JPEG quality. */
 
 const TEAM = [
@@ -45,8 +46,8 @@ const TEAM = [
         linkedin: "#",
     },
     {
-        id: "sopein-tummise",
-        name: "Sopein Tumise", /* CONTENT-AUDIT: confirm spelling — double-check with team member */
+        id: "sopein-tumise",
+        name: "Sopein Tumise",
         role: "Social Media Strategist",
         type: "marketing",
         signature: "Attention is earned, not bought.",
@@ -83,7 +84,7 @@ const TEAM = [
 // Memoized to prevent recreation
 const IconLinkedIn = memo(function IconLinkedIn() {
     return (
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z" />
         </svg>
     );
@@ -91,7 +92,7 @@ const IconLinkedIn = memo(function IconLinkedIn() {
 
 const IconGitHub = memo(function IconGitHub() {
     return (
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.135 20.167 22 16.411 22 12.017 22 6.484 17.522 2 12 2z" />
         </svg>
     );
@@ -114,14 +115,18 @@ const PhotoPlaceholder = memo(function PhotoPlaceholder({ name }) {
 // Memoized to prevent unnecessary re-renders
 const TeamCard = memo(function TeamCard({ member, index }) {
     const [hovered, setHovered] = useState(false);
+    const [showBio, setShowBio] = useState(false);
     const [tilt, setTilt] = useState({ x: 0, y: 0 });
     const [spotlightPos, setSpotlightPos] = useState({ x: 50, y: 50 });
     const cardRef = useRef(null);
     const rafId = useRef(null);
+    const isHoverDevice = useRef(
+        typeof window !== "undefined" && window.matchMedia("(hover: hover)").matches
+    ).current;
 
     // Throttled mouse move using requestAnimationFrame
     const handleMouseMove = useCallback((e) => {
-        // Cancel previous animation frame if it exists
+        if (!isHoverDevice) return;
         if (rafId.current !== null) return;
 
         rafId.current = requestAnimationFrame(() => {
@@ -154,6 +159,11 @@ const TeamCard = memo(function TeamCard({ member, index }) {
         }
     }, []);
 
+    const handleToggleBio = useCallback((e) => {
+        e.stopPropagation();
+        setShowBio(prev => !prev);
+    }, []);
+
     // Cleanup animation frame on unmount
     useEffect(() => {
         return () => {
@@ -171,6 +181,7 @@ const TeamCard = memo(function TeamCard({ member, index }) {
                 `team__card--${member.type}`,
                 member.featured ? "team__card--featured" : "",
                 hovered ? "team__card--hovered" : "",
+                showBio ? "team__card--bio-visible" : "",
             ]
                 .filter(Boolean)
                 .join(" ")}
@@ -179,7 +190,7 @@ const TeamCard = memo(function TeamCard({ member, index }) {
                 "--_tilt-x": `${tilt.x}deg`,
                 "--_tilt-y": `${tilt.y}deg`,
             }}
-            onMouseEnter={() => setHovered(true)}
+            onMouseEnter={() => { if (isHoverDevice) setHovered(true); }}
             onMouseLeave={handleMouseLeave}
             onMouseMove={handleMouseMove}
             aria-label={`${member.name}, ${member.role}`}
@@ -189,7 +200,7 @@ const TeamCard = memo(function TeamCard({ member, index }) {
                 className="team__card-spotlight"
                 style={{
                     background: `radial-gradient(320px circle at ${spotlightPos.x}% ${spotlightPos.y}%, var(--_spotlight), transparent 65%)`,
-                    opacity: hovered ? 1 : 0,
+                    opacity: isHoverDevice && hovered ? 1 : 0,
                 }}
                 aria-hidden="true"
             />
@@ -200,11 +211,10 @@ const TeamCard = memo(function TeamCard({ member, index }) {
             {/* Photo */}
             <div className="team__photo-wrap">
                 {member.photo ? (
-                    <img
+                    <BlurImage
                         src={member.photo}
                         alt={member.name}
                         className="team__photo"
-                        loading="lazy"
                     />
                 ) : (
                     <PhotoPlaceholder name={member.name} />
@@ -230,7 +240,7 @@ const TeamCard = memo(function TeamCard({ member, index }) {
 
                 <p className="team__signature">{member.signature}</p>
 
-                <div className="team__reveal">
+                <div className="team__reveal" id={`bio-${member.id}`}>
                     <p className="team__bio">{member.bio}</p>
                     <div className="team__skills">
                         {member.skills.map((s, i) => (
@@ -244,6 +254,11 @@ const TeamCard = memo(function TeamCard({ member, index }) {
                         ))}
                     </div>
                 </div>
+
+                <button className="team__read-btn" onClick={handleToggleBio}
+                    aria-expanded={showBio} aria-controls={`bio-${member.id}`}>
+                    {showBio ? "Show less" : "Read bio"}
+                </button>
 
                 <div className="team__socials">
                     <a

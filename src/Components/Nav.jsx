@@ -5,6 +5,7 @@ const NAV_LINKS = [
     { label: "About", href: "#About" },
     { label: "Services", href: "#Services" },
     { label: "Team", href: "#Teams" },
+    { label: "Contact", href: "#Contact" },
 ];
 
 function IconSun() {
@@ -77,6 +78,8 @@ export default function Nav() {
 
     /* ===========================
        Scroll Behaviour
+       Adds a 10px deadband to prevent flicker
+       from touch scroll bounce.
     ============================ */
     useEffect(() => {
         const onScroll = () => {
@@ -86,8 +89,8 @@ export default function Nav() {
 
             if (current > lastScrollY.current && current > 80) {
                 setHidden(true);
-                setMenuOpen(false); 
-            } else {
+                setMenuOpen(false);
+            } else if (current < lastScrollY.current - 10) {
                 setHidden(false);
             }
 
@@ -100,19 +103,31 @@ export default function Nav() {
 
     /* ===========================
        Scroll-spy — active nav link
+       Uses rootMargin with a narrow detection band near the top
+       so the current section is always the one whose top edge
+       is closest to the viewport top (below the navbar).
     ============================ */
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
+                let highest = null;
+                let highestTop = Infinity;
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         const id = entry.target.id;
                         const match = NAV_LINKS.find((link) => link.href === `#${id}`);
-                        if (match) setActiveSection(match.label);
+                        if (match) {
+                            const rect = entry.target.getBoundingClientRect();
+                            if (rect.top < highestTop) {
+                                highestTop = rect.top;
+                                highest = match.label;
+                            }
+                        }
                     }
                 });
+                if (highest) setActiveSection(highest);
             },
-            { threshold: 0.3, rootMargin: "-80px 0px 0px 0px" }
+            { threshold: 0, rootMargin: "-80px 0px -90% 0px" }
         );
 
         NAV_LINKS.forEach(({ href }) => {
@@ -171,83 +186,90 @@ export default function Nav() {
         "navbar",
         scrolled ? "navbar--scrolled" : "",
         hidden ? "navbar--hidden" : "",
-        menuOpen ? "navbar--open" : "",
     ]
         .filter(Boolean)
         .join(" ");
 
     return (
-        <nav ref={navRef} className={navClass} aria-label="Main navigation">
-            <div className="nav-container">
+        <>
+            <nav ref={navRef} className={navClass} aria-label="Main navigation">
+                <div className="nav-container">
 
-                {/* Logoo */}
-                <div className="logo">
-                    Prime
-                    <span>
-                        Axis
-                    </span>
-                </div>
-
-                {/* Desktop Links */}
-                <div className="navLink-container">
-                    <ul className="nav-links">
-                        {NAV_LINKS.map((link) => (
-                            <li key={link.label}>
-                                <a
-                                    href={link.href}
-                                    className={`nav-link${activeSection === link.label ? " active" : ""}`}
-                                >
-                                    {link.label}
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-
-                    <button className="cta" aria-label="Contact us"
-                    onClick={() => document.getElementById("Contact").scrollIntoView({behavior:"smooth"})}
-                    >
-                        Contact us
-                    </button>
-                </div>
-
-                {/* Right Actions */}
-                <div className="nav-actions">
-
-                    {/* Theme Toggle */}
-                    <button
-                        className="nav-icon-btn nav-theme-toggle"
-                        onClick={toggleDark}
-                        aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-                        title={isDark ? "Light mode" : "Dark mode"}
-                    >
-                        <span className="nav-theme-toggle__track" aria-hidden="true">
-                            <span className="nav-theme-toggle__thumb">
-                                {isDark ? <IconSun /> : <IconMoon />}
-                            </span>
+                    {/* Logo */}
+                    <div className="logo">
+                        Prime
+                        <span>
+                            Axis
                         </span>
-                    </button>
+                    </div>
 
-                    {/* Hamburger */}
-                    <button
-                        className="nav-icon-btn nav-hamburger"
-                        onClick={toggleMenu}
-                        aria-label={menuOpen ? "Close menu" : "Open menu"}
-                        aria-expanded={menuOpen}
-                        aria-controls="mobile-menu"
-                    >
-                        {menuOpen ? <IconX /> : <IconMenu />}
-                    </button>
+                    {/* Desktop Links */}
+                    <div className="navLink-container">
+                        <ul className="nav-links">
+                            {NAV_LINKS.map((link) => (
+                                <li key={link.label}>
+                                    <a
+                                        href={link.href}
+                                        className={`nav-link${activeSection === link.label ? " active" : ""}`}
+                                    >
+                                        {link.label}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
 
+                    {/* Right Actions */}
+                    <div className="nav-actions">
+
+                        {/* Theme Toggle */}
+                        <button
+                            className="nav-icon-btn nav-theme-toggle"
+                            onClick={toggleDark}
+                            aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+                            title={isDark ? "Light mode" : "Dark mode"}
+                        >
+                            <span className="nav-theme-toggle__track" aria-hidden="true">
+                                <span className="nav-theme-toggle__thumb">
+                                    {isDark ? <IconSun /> : <IconMoon />}
+                                </span>
+                            </span>
+                        </button>
+
+                        {/* Hamburger */}
+                        <button
+                            className="nav-icon-btn nav-hamburger"
+                            onClick={toggleMenu}
+                            aria-label="Open menu"
+                            aria-expanded={menuOpen}
+                            aria-controls="mobile-menu"
+                        >
+                            <IconMenu />
+                        </button>
+
+                    </div>
                 </div>
-            </div>
+            </nav>
 
-            {/* Mobile Menu */}
+            {/* Mobile Menu — Full Screen Overlay (outside <nav> to avoid animation transform containment) */}
             <div
                 id="mobile-menu"
                 ref={mobileMenuRef}
                 className={`nav-mobile${menuOpen ? " nav-mobile--open" : ""}`}
                 aria-hidden={!menuOpen}
             >
+                <button
+                    className="nav-mobile__close"
+                    onClick={closeMenu}
+                    aria-label="Close menu"
+                >
+                    <IconX />
+                </button>
+
+                <div className="nav-mobile__brand">
+                    Prime<span>Axis</span>
+                </div>
+
                 <ul className="nav-mobile__links">
                     {NAV_LINKS.map((link, i) => (
                         <li
@@ -265,16 +287,7 @@ export default function Nav() {
                         </li>
                     ))}
                 </ul>
-
-                <div className="nav-mobile__cta">
-                    <button
-                        className="cta nav-mobile__cta-btn"
-                        onClick={closeMenu}
-                    >
-                        Contact us
-                    </button>
-                </div>
             </div>
-        </nav>
+        </>
     );
 }

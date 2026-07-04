@@ -38,21 +38,22 @@ export default function HeroPage() {
             const hint = document.querySelector(".hero__scroll-hint");
             if (!hint) return;
             const past = window.scrollY > window.innerHeight * 0.8;
-            hint.style.opacity = past ? "0" : "";
-            hint.style.pointerEvents = past ? "none" : "";
+            hint.classList.toggle("hero__scroll-hint--hidden", past);
         };
         window.addEventListener("scroll", onScroll, { passive: true });
         return () => window.removeEventListener("scroll", onScroll);
     }, []);
 
     const scrollToContact = () => {
-        const section = document.getElementById("Contact");
-        section.scrollIntoView({ behavior: "smooth" });
+        const el = document.getElementById("Contact");
+        if (window.lenis) window.lenis.scrollTo(el);
+        else el.scrollIntoView({ behavior: "smooth" });
     }
 
     const scrollToServices = () => {
-        const section = document.getElementById("Services")
-        section.scrollIntoView({behavior: "smooth"})
+        const el = document.getElementById("Services")
+        if (window.lenis) window.lenis.scrollTo(el);
+        else el.scrollIntoView({ behavior: "smooth" });
     }
     return (
         <section
@@ -75,7 +76,7 @@ export default function HeroPage() {
 
                     <span className="hero__eyebrow">
                         <span className="hero__eyebrow-dot" />
-                        Primeaxis Digital
+                        Prime Axis
                     </span>
 
                     <h1 className="hero__heading">
@@ -92,10 +93,10 @@ export default function HeroPage() {
 
 
                     <div className="hero__buttons">
-                        <button className="btn btn--primary" onClick={scrollToServices}>
+                        <button className="btn btn--primary" onClick={scrollToServices} data-magnetic>
                             Explore Services
                         </button>
-                        <button className="btn--contact" onClick={scrollToContact}>
+                        <button className="btn--contact" onClick={scrollToContact} data-magnetic>
                             Contact Us
                             <span className="btn__arrow" aria-hidden="true">↗</span>
                         </button>

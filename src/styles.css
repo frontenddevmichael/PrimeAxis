@@ -1,0 +1,242 @@
+@import 'tailwindcss';
+
+/*
+  Lastwerk design tokens. The page is a pale grey canvas holding white panels
+  ("cards") with big radii, set in one tight grotesk. Violet is the only
+  colour; the iridescent artwork (src/components/Holo.tsx) carries the rest.
+  Everything rounded is a squircle; true circles opt out with .round.
+*/
+@theme {
+  --font-sans: 'Inter Tight', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --color-canvas: #e9e9ec;
+  --color-card: #ffffff;
+  --color-soft: #f3f3f5;
+  --color-line: #e3e3e8;
+  --color-line-strong: #c9c9d1;
+  --color-ink: #0b0b0c;
+  --color-ink-2: #26262b;
+  --color-muted: #5c5c66;
+  --color-faint: #9b9ba5;
+  --color-night: #050505;
+  --color-night-2: #151517;
+  --color-night-muted: #a6a6b0;
+  --color-violet: #5b14f5;
+  --color-violet-deep: #4207c4;
+  --color-violet-soft: #ede6ff;
+  --color-violet-light: #b9a2ff;
+  --color-pink: #ff8ad8;
+  --color-cyan: #74e3ff;
+  --color-success: #13764a;
+  --color-danger: #c0262d;
+  --color-scrim: #0b0b0c;
+
+  --radius-xs: 10px;
+  --radius-control: 16px;
+  --radius-card-sm: 22px;
+  --radius-card: 30px;
+
+  --shadow-card: 0 1px 0 rgb(255 255 255 / 0.9) inset, 0 24px 48px -32px rgb(20 10 60 / 0.18);
+  --shadow-float: 0 30px 80px -24px rgb(16 6 50 / 0.35);
+  --shadow-violet: 0 24px 60px -24px rgb(91 20 245 / 0.65);
+  --shadow-focus: 0 0 0 3px rgb(91 20 245 / 0.28);
+
+  --duration-fast: 160ms;
+  --duration-base: 320ms;
+  --duration-slow: 700ms;
+  --duration-hero: 1100ms;
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --animate-spin-slow: spin-slow 60s linear infinite;
+  --animate-float: float 8s ease-in-out infinite;
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-shimmer: shimmer 1.6s linear infinite;
+  --animate-hue: hue 14s ease-in-out infinite alternate;
+
+  @keyframes spin-slow {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+    50% { transform: translate3d(0, -20px, 0) rotate(3deg); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes shimmer {
+    from { background-position: -200% 0; }
+    to { background-position: 200% 0; }
+  }
+  @keyframes hue {
+    from { filter: hue-rotate(-10deg) saturate(1); }
+    to { filter: hue-rotate(18deg) saturate(1.15); }
+  }
+}
+
+/*
+  State variants that the style guide can pin: `hov:`, `prs:` and `fv:` match
+  the real :hover / :active / :focus-visible, and also an element carrying
+  data-force="hover" (or pressed, focus). `group-hov:` follows a .group parent.
+*/
+@custom-variant hov {
+  @media (hover: hover) {
+    &:hover {
+      @slot;
+    }
+  }
+  &[data-force~='hover'] {
+    @slot;
+  }
+}
+@custom-variant prs {
+  &:active {
+    @slot;
+  }
+  &[data-force~='pressed'] {
+    @slot;
+  }
+}
+@custom-variant fv {
+  &:focus-visible {
+    @slot;
+  }
+  &[data-force~='focus'] {
+    @slot;
+  }
+}
+@custom-variant group-hov {
+  @media (hover: hover) {
+    :where(.group):hover & {
+      @slot;
+    }
+  }
+  :where(.group):focus-visible & {
+    @slot;
+  }
+  :where(.group)[data-force~='hover'] & {
+    @slot;
+  }
+  :where(.group)[data-active='true'] & {
+    @slot;
+  }
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    corner-shape: squircle;
+    border-color: var(--color-line);
+  }
+  .round,
+  .round::before,
+  .round::after {
+    corner-shape: round;
+  }
+  html {
+    background: var(--color-canvas);
+    color-scheme: light;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.55;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+  }
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+  }
+  button:not(:disabled),
+  [role='button'] {
+    cursor: pointer;
+  }
+  :focus-visible,
+  [data-force~='focus'] {
+    outline: 2px solid var(--color-violet);
+    outline-offset: 3px;
+  }
+  .on-dark :focus-visible,
+  .on-dark:focus-visible,
+  .on-dark[data-force~='focus'],
+  .on-dark [data-force~='focus'] {
+    outline-color: #fff;
+  }
+  ::selection {
+    background: var(--color-violet);
+    color: #fff;
+  }
+  img,
+  svg {
+    user-select: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Big tight display type: the reference's uppercase grotesk. */
+@utility display {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 0.86;
+  letter-spacing: -0.055em;
+}
+
+/* Small caption caps (12px), used for labels and the captions in the hero. */
+@utility caps {
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+@utility text-pretty {
+  text-wrap: pretty;
+}
+
+/* An iridescent fill for avatars and placeholders. */
+@utility holo-fill {
+  background:
+    radial-gradient(120% 90% at 20% 15%, #ffffff 0%, transparent 38%),
+    radial-gradient(90% 80% at 85% 25%, var(--color-cyan) 0%, transparent 55%),
+    radial-gradient(80% 90% at 30% 90%, var(--color-pink) 0%, transparent 55%),
+    linear-gradient(135deg, var(--color-violet-light), var(--color-violet) 60%, var(--color-violet-deep));
+}
+
+@utility skeleton {
+  background: linear-gradient(90deg, var(--color-soft) 0%, #e8e8ee 50%, var(--color-soft) 100%);
+  background-size: 200% 100%;
+  animation: var(--animate-shimmer);
+}
+
+.marquee-mask {
+  mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+}

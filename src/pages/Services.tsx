@@ -1,0 +1,283 @@
+import { ArrowUpRight } from 'lucide-react'
+import { motion, useReducedMotion, useScroll, useSpring, useTransform, type MotionValue } from 'motion/react'
+import { useRef } from 'react'
+
+import { ArrowLink, Badge, Reveal, Title } from '../components/Bits'
+import { ButtonLink } from '../components/Button'
+import { Card, Section, type CardTone } from '../components/Card'
+import { Accordion } from '../components/Content'
+import { Holo } from '../components/Holo'
+import { Drift } from '../components/Motion'
+import { PageHero } from '../components/Nav'
+import { FAQ, PROCESS, SERVICE_CTA, SERVICES, SITE, type Service } from '../data'
+import { cx } from '../lib/cx'
+import { useDocumentTitle } from '../lib/storage'
+
+const SERVICE_LAYOUT: Array<{
+  className: string
+  tone: CardTone
+  artClassName: string
+  contentClassName: string
+  scrimClassName: string
+  align?: 'left' | 'right'
+}> = [
+  {
+    className: 'md:col-span-2 lg:col-span-7 lg:row-span-2 min-h-[440px] lg:min-h-[560px]',
+    tone: 'violet',
+    artClassName: 'right-[-8%] top-[4%] w-[52%] max-w-[360px]',
+    contentClassName: 'max-w-[34rem]',
+    scrimClassName: 'from-violet via-violet/60',
+  },
+  {
+    className: 'lg:col-span-5 min-h-[260px]',
+    tone: 'white',
+    artClassName: 'right-[-8%] top-[-6%] w-[38%] max-w-[180px]',
+    contentClassName: 'max-w-[24rem]',
+    scrimClassName: 'from-card via-card/75',
+  },
+  {
+    className: 'lg:col-span-5 min-h-[260px]',
+    tone: 'soft',
+    artClassName: 'left-[-10%] top-[-8%] w-[40%] max-w-[190px]',
+    contentClassName: 'max-w-[24rem]',
+    scrimClassName: 'from-soft via-soft/75',
+    align: 'right',
+  },
+  {
+    className: 'lg:col-span-5 min-h-[320px]',
+    tone: 'white',
+    artClassName: 'right-[-10%] top-[-4%] w-[46%] max-w-[200px]',
+    contentClassName: 'max-w-[26rem]',
+    scrimClassName: 'from-card via-card/75',
+  },
+  {
+    className: 'md:col-span-2 lg:col-span-7 min-h-[320px]',
+    tone: 'night',
+    artClassName: 'right-[-4%] top-[-8%] w-[30%] max-w-[270px]',
+    contentClassName: 'max-w-[32rem]',
+    scrimClassName: 'from-night via-night/75',
+  },
+]
+
+function ServicePanel({
+  service,
+  index,
+  className,
+  tone,
+  artClassName,
+  contentClassName,
+  scrimClassName,
+  align = 'left',
+}: {
+  service: Service
+  index: number
+  className: string
+  tone: CardTone
+  artClassName: string
+  contentClassName: string
+  scrimClassName: string
+  align?: 'left' | 'right'
+}) {
+  const dark = tone === 'violet' || tone === 'night'
+  return (
+    <Card
+      id={service.slug}
+      aria-labelledby={`${service.slug}-title`}
+      tone={tone}
+      className={cx('group relative flex h-full flex-col overflow-hidden scroll-mt-2 p-6 sm:p-8', className)}
+    >
+      <div className="relative z-10 flex items-start justify-between gap-4">
+        <p className={cx('caps tabular-nums', dark ? 'text-white/55' : 'text-muted')}>0{index + 1}</p>
+        {service.tag && <Badge tone={dark ? 'light' : 'violet'}>{service.tag}</Badge>}
+      </div>
+      <div
+        aria-hidden
+        className={cx('pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[72%] bg-gradient-to-t to-transparent', scrimClassName)}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[54%] backdrop-blur-[3px]"
+        style={{ maskImage: 'linear-gradient(to top, black 48%, transparent 100%)' }}
+      />
+      <div className={cx('relative z-10 mt-auto pt-20', contentClassName, align === 'right' && 'ml-auto text-right')}>
+        <h2
+          id={`${service.slug}-title`}
+          className={cx('display max-w-[15ch] text-[clamp(2.1rem,1.2rem+2.4vw,4rem)] leading-[0.9] text-balance', align === 'right' && 'ml-auto')}
+        >
+          {service.title}
+        </h2>
+        <p className={cx('mt-4 max-w-md text-pretty text-[15px] leading-snug', dark ? 'text-white/75' : 'text-ink-2', align === 'right' && 'ml-auto')}>
+          {service.intro}
+        </p>
+        <ul className={cx('mt-5 flex flex-wrap gap-1.5', align === 'right' && 'justify-end')} aria-label={`${service.title} deliverables`}>
+          {service.deliverables.map((d) => (
+            <li
+              key={d}
+              className={cx(
+                'round inline-flex min-h-7 items-center rounded-full border px-3 text-[12px] font-medium',
+                dark ? 'border-white/20 text-white/75' : 'border-line text-muted',
+              )}
+            >
+              {d}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div
+        aria-hidden
+        className={cx(
+          'pointer-events-none absolute opacity-85 transition-transform duration-[var(--duration-slow)] ease-[var(--ease-out-soft)] group-hov:scale-[1.03]',
+          artClassName,
+        )}
+      >
+        <Drift distance={44}>
+          <Holo kind={service.art} motion />
+        </Drift>
+      </div>
+    </Card>
+  )
+}
+
+/**
+ * One step of the vertical timeline. The rail below it fills as the line
+ * travels down the section with the scroll.
+ */
+function ProcessStep({
+  step,
+  index,
+  total,
+  progress,
+  reduce,
+}: {
+  step: (typeof PROCESS)[number]
+  index: number
+  total: number
+  progress: MotionValue<number>
+  reduce: boolean
+}) {
+  const dotFill = useTransform(progress, [index / total, (index + 0.5) / total], [0, 1])
+  const railFill = useTransform(progress, [(index + 0.5) / total, (index + 1) / total], [0, 1])
+  const last = index === total - 1
+
+  return (
+    <li className={cx('relative pl-10 sm:pl-14', !last && 'pb-14 sm:pb-20')}>
+      <span
+        aria-hidden
+        className="absolute top-2 left-0 grid size-[15px] place-items-center rounded-full border border-line-strong bg-canvas"
+      >
+        <motion.span style={reduce ? undefined : { scale: dotFill }} className="size-[7px] rounded-full bg-violet" />
+      </span>
+
+      {!last && (
+        <>
+          <span aria-hidden className="absolute top-[23px] bottom-0 left-[7px] w-px bg-line-strong" />
+          <motion.span
+            aria-hidden
+            style={reduce ? undefined : { scaleY: railFill }}
+            className="absolute top-[23px] bottom-0 left-[7px] w-px origin-top bg-violet"
+          />
+        </>
+      )}
+
+      <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-8">
+        <p className="text-[2rem] leading-none font-normal tracking-[-0.05em] text-violet tabular-nums">{step.step}</p>
+        <div>
+          <h3 className="text-2xl font-medium tracking-[-0.03em] uppercase">{step.title}</h3>
+          <p className="mt-2 max-w-[26rem] text-[15px] leading-snug text-muted">{step.body}</p>
+        </div>
+      </div>
+    </li>
+  )
+}
+
+/**
+ * How a project runs: no panel around it, and the line travels straight down
+ * the page so the four steps read in the order they happen.
+ */
+function Process() {
+  const reduce = useReducedMotion()
+  const track = useRef<HTMLOListElement>(null)
+  const { scrollYProgress } = useScroll({ target: track, offset: ['start 0.85', 'end 0.6'] as const })
+  const smooth = useSpring(scrollYProgress, { stiffness: 90, damping: 26, mass: 0.4 })
+
+  return (
+    <Section
+      aria-labelledby="process-title"
+      className="grid gap-10 px-5 py-12 sm:px-8 sm:py-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16"
+    >
+      <div className="flex flex-col gap-5 lg:sticky lg:top-6 lg:self-start">
+        <Badge tone="violet" className="self-start">
+          01–04
+        </Badge>
+        <Title id="process-title" lines={['How a project', 'runs']} align="left" />
+        <p className="max-w-sm text-muted">
+          One team from the first call to thirty days after launch. Nothing gets handed off.
+        </p>
+      </div>
+      <ol ref={track}>
+        {PROCESS.map((p, i) => (
+          <ProcessStep key={p.step} step={p} index={i} total={PROCESS.length} progress={smooth} reduce={!!reduce} />
+        ))}
+      </ol>
+    </Section>
+  )
+}
+
+export function Services() {
+  useDocumentTitle('Services')
+  return (
+    <div className="grid gap-2 p-2">
+      <PageHero title={['What', 'we do']} art={<Holo kind="sphere" motion />} compact />
+
+      <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-12">
+        {SERVICES.map((s, i) => {
+          const layout = SERVICE_LAYOUT[i]
+          return (
+            <Reveal key={s.slug} delay={i * 0.05} className={cx('h-full', layout.className)}>
+              <ServicePanel
+                service={s}
+                index={i}
+                tone={layout.tone}
+                artClassName={layout.artClassName}
+                contentClassName={layout.contentClassName}
+                scrimClassName={layout.scrimClassName}
+                align={layout.align}
+                className="h-full"
+              />
+            </Reveal>
+          )
+        })}
+      </div>
+
+      <Card aria-labelledby="service-cta-title" tone="violet" className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-end">
+        <div>
+          <p className="caps text-white/60">{SERVICE_CTA.eyebrow}</p>
+          <h2 id="service-cta-title" className="display mt-4 max-w-2xl text-[clamp(2rem,1.2rem+2.4vw,3.25rem)] leading-[0.92] tracking-[-0.05em]">
+            {SERVICE_CTA.title}
+          </h2>
+        </div>
+        <div className="flex flex-wrap items-center gap-4">
+          <ButtonLink to="/contact" variant="light" size="md">
+            {SERVICE_CTA.action}
+          </ButtonLink>
+          <a href={SITE.whatsapp} target="_blank" rel="noreferrer" className="inline-flex min-h-12 items-center gap-2 px-1 text-white underline-offset-4 hov:underline">
+            {SERVICE_CTA.call}
+            <ArrowUpRight className="size-4" aria-hidden />
+          </a>
+        </div>
+      </Card>
+
+      <Process />
+
+      <Card as="section" aria-labelledby="faq-title" className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1fr_1.6fr]">
+        <div className="flex flex-col justify-between gap-8">
+          <Title id="faq-title" lines={['Questions', 'we hear']} align="left" />
+          <ArrowLink to="/contact" size="sm">
+            Ask us something else
+          </ArrowLink>
+        </div>
+        <Accordion items={FAQ} />
+      </Card>
+    </div>
+  )
+}

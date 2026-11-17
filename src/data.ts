@@ -4,11 +4,11 @@
 export const SITE = {
   name: 'Prime Axis',
   tagline: 'Scalable web systems & business automation',
-  email: 'hello@lastwerk.studio',
+  email: 'hello@PrimeAxis.studio',
   phone: '+234 916 430 0395',
   whatsapp: 'https://wa.me/2349164300395?text=Hello%21%20I%27d%20like%20to%20book%20a%20free%20consultation%20with%20PrimeAxis.',
-  address: ['Lastwerk Studio', 'Lohmühlenstraße 65', '12435 Berlin'],
-  hours: 'Monday to Friday, 9:00–18:00 CET',
+  address: ['Remote-first agency'],
+  hours: 'Monday to Friday, 9:00–18:00 WAT',
   socials: [
     { label: 'Twitter / X', href: 'https://x.com' },
     { label: 'LinkedIn', href: 'https://www.linkedin.com' },
@@ -222,7 +222,7 @@ export const PROJECTS: Project[] = [
       { value: '3.4×', label: 'More inbound partner enquiries' },
       { value: '11', label: 'Weeks from kickoff to launch' },
     ],
-    quote: { text: 'Lastwerk gave our science a face. Investors started the meeting talking about the brand.', name: 'Dr. Ines Hartmann', role: 'Founder, Aurora Labs' },
+    quote: { text: 'PrimeAxis gave our science a face. Investors started the meeting talking about the brand.', name: 'Dr. Ines Hartmann', role: 'Founder, Aurora Labs' },
     accent: '#b9a2ff',
   },
   {
@@ -338,7 +338,7 @@ export const PROJECTS: Project[] = [
 ]
 
 export const TESTIMONIALS = [
-  { quote: 'Lastwerk gave our science a face. Investors started the meeting talking about the brand.', name: 'Dr. Ines Hartmann', role: 'Founder, Aurora Labs', project: 'aurora-labs' },
+  { quote: 'PrimeAxis gave our science a face. Investors started the meeting talking about the brand.', name: 'Dr. Ines Hartmann', role: 'Founder, Aurora Labs', project: 'aurora-labs' },
   { quote: 'They sat with our engineers every week. Handoff was not a moment, it was the whole project.', name: 'Jonas Weber', role: 'VP Product, Meridian', project: 'meridian' },
   { quote: 'The bravest brief we ever wrote, and they made it look obvious. Spring sales were the best in our history.', name: 'Mara Olsen', role: 'Brand Director, Kite Outdoor', project: 'kite-outdoor' },
   { quote: 'Calm, precise and very fast. Our seven hotels finally look like a family.', name: 'Luca Bianchi', role: 'CEO, Halcyon Hotels', project: 'halcyon' },
@@ -439,7 +439,7 @@ export const CAREERS = {
   perks: [
     { title: 'Four-day weeks in August', body: 'The studio works Monday to Thursday all summer.' },
     { title: '€2,000 learning budget', body: 'Courses, books, conferences, or a workshop. Your call.' },
-    { title: 'Hybrid, Berlin-first', body: 'Three days in the studio, two wherever you work best.' },
+    { title: 'Remote-first', body: 'Work from wherever you do your best work, with regular check-ins across the team.' },
     { title: 'Your own projects', body: 'One Friday a month for self-initiated work.' },
   ],
 }
@@ -449,7 +449,7 @@ export const ROLES: Role[] = [
     slug: 'senior-brand-designer',
     title: 'Senior Brand Designer',
     team: 'Branding',
-    location: 'Berlin, hybrid',
+    location: 'Remote',
     type: 'Full time',
     summary: 'Lead identity projects from first routes to final guidelines.',
     responsibilities: ['Develop creative routes and argue for them', 'Build type, colour and graphic systems', 'Present to clients and run reviews', 'Mentor two mid-level designers'],
@@ -459,7 +459,7 @@ export const ROLES: Role[] = [
     slug: 'product-designer',
     title: 'Product Designer',
     team: 'Digital',
-    location: 'Berlin or remote (EU)',
+    location: 'Remote',
     type: 'Full time',
     summary: 'Design apps and systems for clients like Meridian.',
     responsibilities: ['Plan and run usability tests', 'Design flows, interfaces and prototypes', 'Build and document components', 'Pair with client engineering teams'],
@@ -469,7 +469,7 @@ export const ROLES: Role[] = [
     slug: '3d-motion-designer',
     title: '3D & Motion Designer',
     team: 'Motion',
-    location: 'Berlin, hybrid',
+    location: 'Remote',
     type: 'Full time',
     summary: 'Make the iridescent objects and motion our clients are known for.',
     responsibilities: ['Model, light and render in Blender or Cinema 4D', 'Animate logos and interfaces', 'Produce campaign films', 'Build reusable asset kits'],
@@ -479,7 +479,7 @@ export const ROLES: Role[] = [
     slug: 'new-business-lead',
     title: 'New Business Lead',
     team: 'Studio',
-    location: 'Berlin',
+    location: 'Remote',
     type: 'Full time',
     summary: 'Find and win the projects we want to be known for.',
     responsibilities: ['Qualify inbound briefs', 'Write proposals and estimates', 'Plan our pipeline with the founders', 'Represent the studio at events'],

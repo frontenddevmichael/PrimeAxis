@@ -147,7 +147,7 @@ export function Footer() {
             </p>
             <ul className="mt-4">
               {links.map((m) => (
-                <li key={m.to}>
+                <li key={m.to} className={m.to === '/careers' ? 'max-md:hidden' : undefined}>
                   <Link to={m.to} className="inline-flex min-h-11 min-w-11 items-center text-[15px] transition-colors hov:text-violet">
                     {m.label}
                   </Link>

@@ -68,7 +68,7 @@ export function Studio() {
             <p className="caps text-violet">/The team</p>
             <Title id="team-title" lines={['The people', 'behind PrimeAxis']} align="left" className="mt-2" />
           </div>
-          <ArrowLink to="/careers" size="sm" className="shrink-0">
+          <ArrowLink to="/careers" size="sm" className="shrink-0 max-md:hidden">
             Join the team
           </ArrowLink>
         </div>

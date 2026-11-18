@@ -174,7 +174,8 @@ export function Nav() {
       <Drawer open={open} onClose={() => setOpen(false)} label="Site menu">
         <nav aria-label="Menu" className="mt-6 flex-1">
           <ul className="flex flex-col">
-            {MENU.filter((item) => SHOW_PROJECTS || item.to !== '/work').map((item, i) => (
+            {/* The drawer only opens on phones, where careers is not offered. */}
+            {MENU.filter((item) => item.to !== '/careers' && (SHOW_PROJECTS || item.to !== '/work')).map((item, i) => (
               <motion.li
                 key={item.to}
                 initial={reduce ? undefined : { opacity: 0, x: 24 }}

@@ -1,9 +1,10 @@
 import { AnimatePresence, MotionConfig, motion } from 'motion/react'
-import { useEffect } from 'react'
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router'
+import { useEffect, type ReactElement } from 'react'
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router'
 
 import { Footer } from './components/Footer'
 import { Nav } from './components/Nav'
+import { useIsMobile } from './lib/useMediaQuery'
 import { SHOW_PROJECTS } from './data'
 import { ScrollProgress } from './components/Motion'
 import { ToastProvider } from './components/Overlay'
@@ -35,6 +36,11 @@ function ScrollManager() {
   return null
 }
 
+/** Careers is a desktop page: phones go home instead of an orphaned route. */
+function DesktopOnly({ children }: { children: ReactElement }) {
+  return useIsMobile() ? <Navigate to="/" replace /> : children
+}
+
 function Pages() {
   const location = useLocation()
   return (
@@ -54,8 +60,22 @@ function Pages() {
           {SHOW_PROJECTS && <Route path="work/:slug" element={<CaseStudy />} />}
           <Route path="services" element={<Services />} />
           <Route path="studio" element={<Studio />} />
-          <Route path="careers" element={<Careers />} />
-          <Route path="careers/:slug" element={<RolePage />} />
+          <Route
+            path="careers"
+            element={
+              <DesktopOnly>
+                <Careers />
+              </DesktopOnly>
+            }
+          />
+          <Route
+            path="careers/:slug"
+            element={
+              <DesktopOnly>
+                <RolePage />
+              </DesktopOnly>
+            }
+          />
           <Route path="contact" element={<Contact />} />
           <Route path="styleguide" element={<Styleguide />} />
           <Route path="*" element={<NotFound />} />

@@ -91,6 +91,8 @@ export function App() {
     <MotionConfig reducedMotion={import.meta.env.DEV ? 'never' : 'user'}>
       <BrowserRouter>
         <ToastProvider>
+          {/* The page's material: fixed behind every panel, seen through the gutters. */}
+          <div className="jelly-field" aria-hidden />
           <ScrollProgress />
           <ScrollManager />
           <a href="#main" className="sr-only z-[100] rounded-full bg-violet px-5 py-3 text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3">

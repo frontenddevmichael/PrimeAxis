@@ -18,7 +18,7 @@ export function ArrowLink({
   return (
     <Link
       className={cx(
-        'group inline-flex min-h-10 items-center gap-1.5 font-medium uppercase tracking-[-0.02em] transition-colors duration-[var(--duration-fast)]',
+        'group inline-flex min-h-11 items-center gap-1.5 font-medium uppercase tracking-[-0.02em] transition-colors duration-[var(--duration-fast)]',
         size === 'sm' && 'text-sm',
         size === 'md' && 'text-[clamp(1.1rem,0.9rem+0.6vw,1.6rem)]',
         size === 'lg' && 'text-[clamp(1.4rem,1rem+1.2vw,2.25rem)]',

@@ -84,7 +84,7 @@ export function NewsletterForm({ tone = 'night' }: { tone?: 'night' | 'white' })
           onChange={(e) => setEmail(e.target.value)}
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? `${uid}-error` : undefined}
-          className={cx('h-full min-w-0 flex-1 bg-transparent text-[15px] outline-none focus-visible:outline-none', dark ? 'placeholder:text-night-muted' : 'placeholder:text-muted')}
+          className={cx('h-full min-w-0 flex-1 bg-transparent text-base outline-none focus-visible:outline-none', dark ? 'placeholder:text-night-muted' : 'placeholder:text-muted')}
         />
         <IconButton type="submit" aria-label="Subscribe" tone="violet" disabled={state === 'loading'} aria-busy={state === 'loading' || undefined}>
           <ArrowRight className={cx('size-5', state === 'loading' && 'animate-pulse')} />
@@ -149,7 +149,7 @@ export function Footer() {
             <ul className="mt-4">
               {links.map((m) => (
                 <li key={m.to}>
-                  <Link to={m.to} className="inline-flex min-h-9 items-center text-[15px] transition-colors hov:text-violet">
+                  <Link to={m.to} className="inline-flex min-h-11 min-w-11 items-center text-[15px] transition-colors hov:text-violet">
                     {m.label}
                   </Link>
                 </li>
@@ -173,7 +173,7 @@ export function Footer() {
                 href={SITE.whatsapp}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-3 inline-flex min-h-9 items-center gap-1 underline-offset-4 transition-colors hov:text-violet hov:underline"
+                className="mt-3 inline-flex min-h-11 items-center gap-1 underline-offset-4 transition-colors hov:text-violet hov:underline"
               >
                 Book a free call
                 <ArrowUpRight className="size-4" strokeWidth={1.8} aria-hidden />
@@ -187,10 +187,10 @@ export function Footer() {
               <span className="text-faint tabular-nums">03</span>
             </p>
             <div className="mt-4 flex flex-col text-[15px]">
-              <a href={`mailto:${SITE.email}`} className="inline-flex min-h-9 items-center break-all transition-colors hov:text-violet">
+              <a href={`mailto:${SITE.email}`} className="inline-flex min-h-11 items-center break-all transition-colors hov:text-violet">
                 {SITE.email}
               </a>
-              <a href={`tel:${SITE.phone.replace(/\s/g, '')}`} className="inline-flex min-h-9 items-center transition-colors hov:text-violet">
+              <a href={`tel:${SITE.phone.replace(/\s/g, '')}`} className="inline-flex min-h-11 items-center transition-colors hov:text-violet">
                 {SITE.phone}
               </a>
               <ul className="mt-2 flex flex-wrap gap-x-4">
@@ -200,7 +200,7 @@ export function Footer() {
                       href={s.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex min-h-9 items-center text-muted transition-colors hov:text-violet"
+                      className="inline-flex min-h-11 items-center text-muted transition-colors hov:text-violet"
                     >
                       {s.label}
                     </a>
@@ -239,7 +239,7 @@ export function Footer() {
             <Logo className="[&_svg]:size-5" />
             {FOOTER.legal}
           </span>
-          <a href="#top" className="inline-flex min-h-9 items-center transition-colors hov:text-violet">
+          <a href="#top" className="inline-flex min-h-11 items-center transition-colors hov:text-violet">
             Back to top
           </a>
         </motion.div>

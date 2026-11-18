@@ -99,7 +99,7 @@ function ModalPanel({ onClose, title, description, children, className }: Omit<M
               </p>
             )}
           </div>
-          <IconButton aria-label="Close" size="sm" tone="outline" onClick={onClose} className="-mt-1 -mr-1">
+          <IconButton aria-label="Close" tone="outline" onClick={onClose} className="-mt-1 -mr-1">
             <X className="size-4" />
           </IconButton>
         </div>

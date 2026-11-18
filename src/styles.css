@@ -139,6 +139,7 @@
     background: var(--color-canvas);
     color-scheme: light;
     scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
     -webkit-text-size-adjust: 100%;
   }
   body {

@@ -81,7 +81,7 @@ function Cell({
 /** Text link whose arrow slides in on hover. */
 function SlideLink({ href, children, className }: { href: string; children: ReactNode; className?: string }) {
   return (
-    <a href={href} className={cx('group/link inline-flex min-h-10 items-center gap-1.5 transition-colors hov:text-violet', className)}>
+    <a href={href} className={cx('group/link inline-flex min-h-11 items-center gap-1.5 transition-colors hov:text-violet', className)}>
       {children}
       <ArrowUpRight
         className="size-4 -translate-x-1 opacity-0 transition-[opacity,transform] duration-300 group-hov/link:translate-x-0 group-hov/link:opacity-100"

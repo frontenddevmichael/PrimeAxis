@@ -53,7 +53,7 @@ function Hero() {
         >
           <motion.div style={reduce ? undefined : { x: sx, y: sy, rotate: driftRotate }}>
             <motion.div
-              initial={{ opacity: 0, scale: 0.9, rotate: -8 }}
+              initial={reduce ? undefined : { opacity: 0, scale: 0.9, rotate: -8 }}
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               transition={{ duration: 1.4, ease: EASE }}
             >
@@ -82,15 +82,20 @@ function Hero() {
 
         {/* Reach out + headline, bottom right */}
         <div className="relative z-10 order-4 mt-6 flex flex-col items-end lg:absolute lg:right-0 lg:bottom-0 lg:mt-0">
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.55, ease: EASE }} className="mb-[clamp(1rem,4svh,2.6rem)]">
+          <motion.div
+            initial={reduce ? undefined : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.55, ease: EASE }}
+            className="order-2 mt-6 mb-0 lg:order-1 lg:mt-0 lg:mb-[clamp(1rem,4svh,2.6rem)]"
+          >
             <Magnetic strength={6}>
               <ArrowLink to="/contact">{HOME.reachOut}</ArrowLink>
             </Magnetic>
           </motion.div>
-          <h1 id="hero-title" className="display text-right text-[clamp(2.4rem,12.6vw,6rem)] sm:text-[clamp(4rem,13vw,8rem)] lg:text-[min(10.1vw,17svh,10.6rem)]">
+          <h1 id="hero-title" className="display order-1 text-right text-[clamp(2.4rem,12.6vw,6rem)] sm:text-[clamp(4rem,13vw,8rem)] lg:order-2 lg:text-[min(10.1vw,17svh,10.6rem)]">
             {HOME.headline.map((line, i) => (
               <span key={line} className="block overflow-hidden pb-[0.04em]">
-                <motion.span className="block" initial={{ y: '105%' }} animate={{ y: 0 }} transition={{ duration: 1.1, delay: 0.15 + i * 0.12, ease: EASE }}>
+                <motion.span className="block" initial={reduce ? undefined : { y: '105%' }} animate={{ y: 0 }} transition={{ duration: 1.1, delay: 0.15 + i * 0.12, ease: EASE }}>
                   {line}
                 </motion.span>
               </span>
@@ -155,7 +160,7 @@ function Manifesto() {
 function Approach() {
   return (
     <Section aria-labelledby="approach-title" className="grid gap-8 px-5 py-10 sm:px-8 sm:py-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-12">
-      <div className="flex flex-col gap-6 lg:sticky lg:top-6 lg:self-start">
+      <div className="flex flex-col gap-6 lg:sticky lg:top-[5.5rem] lg:self-start">
         <Title id="approach-title" lines={HOME.approachTitle} align="left" />
         <p className="max-w-sm text-muted">Four habits that shape every project, whatever its size.</p>
       </div>
@@ -188,7 +193,7 @@ function Approach() {
 function Work() {
   return (
     <Section aria-labelledby="work-title" className="grid gap-8 px-5 py-10 sm:px-8 sm:py-14 lg:grid-cols-[0.72fr_1.28fr] lg:gap-12">
-      <div className="flex flex-col gap-6 lg:sticky lg:top-6 lg:self-start">
+      <div className="flex flex-col gap-6 lg:sticky lg:top-[5.5rem] lg:self-start">
         <Title id="work-title" lines={HOME.workTitle} align="left" />
         <ArrowLink to="/work">All projects</ArrowLink>
       </div>

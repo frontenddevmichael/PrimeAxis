@@ -51,7 +51,7 @@ const SERVICE_LAYOUT: Array<{
     scrimClassName: 'from-card via-card/75',
   },
   {
-    className: 'md:col-span-2 lg:col-span-7 min-h-[320px]',
+    className: 'lg:col-span-7 min-h-[320px]',
     tone: 'night',
     artClassName: 'right-[-4%] top-[-8%] w-[30%] max-w-[270px]',
     contentClassName: 'max-w-[32rem]',
@@ -84,7 +84,7 @@ function ServicePanel({
       id={service.slug}
       aria-labelledby={`${service.slug}-title`}
       tone={tone}
-      className={cx('group relative flex h-full flex-col overflow-hidden scroll-mt-2 p-6 sm:p-8', className)}
+      className={cx('group relative flex h-full flex-col overflow-hidden scroll-mt-14 p-6 sm:p-8', className)}
     >
       <div className="relative z-10 flex items-start justify-between gap-4">
         <p className={cx('caps tabular-nums', dark ? 'text-white/55' : 'text-muted')}>0{index + 1}</p>
@@ -205,7 +205,7 @@ function Process() {
       aria-labelledby="process-title"
       className="grid gap-10 px-5 py-12 sm:px-8 sm:py-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16"
     >
-      <div className="flex flex-col gap-5 lg:sticky lg:top-6 lg:self-start">
+      <div className="flex flex-col gap-5 lg:sticky lg:top-[5.5rem] lg:self-start">
         <Badge tone="violet" className="self-start">
           01–04
         </Badge>

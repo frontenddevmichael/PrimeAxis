@@ -66,14 +66,14 @@ export function Work() {
             value={query}
             onChange={(e) => update('q', e.target.value)}
             placeholder="Search clients or projects"
-            className="round h-11 w-full rounded-full border border-line-strong bg-card pr-11 pl-11 text-[15px] placeholder:text-muted transition-[border-color,box-shadow] focus:border-violet focus:shadow-[var(--shadow-focus)] focus:outline-none [&::-webkit-search-cancel-button]:hidden"
+            className="round h-11 w-full rounded-full border border-line-strong bg-card pr-11 pl-11 text-base placeholder:text-muted transition-[border-color,box-shadow] focus:border-violet focus:shadow-[var(--shadow-focus)] focus:outline-none [&::-webkit-search-cancel-button]:hidden"
           />
           {query && (
             <button
               type="button"
               aria-label="Clear search"
               onClick={() => update('q', '')}
-              className="round absolute top-1/2 right-0.5 grid size-10 -translate-y-1/2 place-items-center rounded-full text-muted hov:text-ink"
+              className="round absolute top-1/2 right-0.5 grid size-11 -translate-y-1/2 place-items-center rounded-full text-muted hov:text-ink"
             >
               <X className="size-4" />
             </button>

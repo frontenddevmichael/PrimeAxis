@@ -4,7 +4,7 @@ import { useId, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttribu
 import { cx } from '../lib/cx'
 
 const control =
-  'w-full rounded-[var(--radius-control)] border border-line-strong bg-card px-4 text-[15px] text-ink placeholder:text-muted/80 transition-[border-color,box-shadow] duration-[var(--duration-fast)] hov:border-ink/50 focus:border-violet focus:shadow-[var(--shadow-focus)] focus:outline-none focus-visible:outline-none data-[force~=focus]:border-violet data-[force~=focus]:shadow-[var(--shadow-focus)] data-[force~=focus]:outline-none disabled:cursor-not-allowed disabled:bg-soft disabled:text-muted aria-[invalid=true]:border-danger aria-[invalid=true]:focus:shadow-[0_0_0_3px_rgb(192_38_45/0.2)]'
+  'w-full rounded-[var(--radius-control)] border border-line-strong bg-card px-4 text-base text-ink placeholder:text-muted/80 transition-[border-color,box-shadow] duration-[var(--duration-fast)] hov:border-ink/50 focus:border-violet focus:shadow-[var(--shadow-focus)] focus:outline-none focus-visible:outline-none data-[force~=focus]:border-violet data-[force~=focus]:shadow-[var(--shadow-focus)] data-[force~=focus]:outline-none disabled:cursor-not-allowed disabled:bg-soft disabled:text-muted aria-[invalid=true]:border-danger aria-[invalid=true]:focus:shadow-[0_0_0_3px_rgb(192_38_45/0.2)]'
 
 type FieldProps = {
   label: string
@@ -70,14 +70,14 @@ export function Checkbox({
   const id = useId()
   return (
     <div className={className}>
-      <label htmlFor={id} className="group flex min-h-10 cursor-pointer items-start gap-3 text-[15px] text-ink">
+      <label htmlFor={id} className="group flex min-h-11 cursor-pointer items-start gap-3 text-[15px] text-ink">
         <span className="relative mt-0.5 grid size-5 shrink-0 place-items-center">
           <input
             id={id}
             type="checkbox"
             aria-invalid={error ? true : undefined}
             aria-describedby={error ? `${id}-error` : undefined}
-            className="peer absolute -inset-2.5 size-10 cursor-pointer appearance-none opacity-0 disabled:cursor-not-allowed"
+            className="peer absolute -inset-3 size-11 cursor-pointer appearance-none opacity-0 disabled:cursor-not-allowed"
             {...rest}
           />
           <span

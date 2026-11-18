@@ -89,7 +89,7 @@ export function Nav() {
         className="pointer-events-none absolute inset-x-0 top-0 h-24 backdrop-blur-xl [mask-image:linear-gradient(to_bottom,#000_45%,transparent)] [-webkit-mask-image:linear-gradient(to_bottom,#000_45%,transparent)]"
       />
       <div className="relative mx-auto flex h-14 max-w-[88rem] items-center justify-between gap-4 rounded-full pr-1.5 pl-5 text-ink">   
-        <Link to="/" aria-label={`${SITE.name} home`} className="round -m-1 rounded-full p-1">
+        <Link to="/" aria-label={`${SITE.name} home`} className="round -m-1 inline-flex min-h-11 items-center rounded-full p-1">
           <span
             aria-hidden
             className="inline-flex items-baseline text-[clamp(1.9rem,1.5rem+1.2vw,2.6rem)] leading-none font-medium tracking-[-0.05em]"
@@ -136,7 +136,7 @@ export function Nav() {
                     to={item.to}
                     aria-current={active ? 'page' : undefined}
                     className={cx(
-                      'caps round relative inline-flex min-h-10 items-center rounded-full px-4 text-[13px] transition-colors',
+                      'caps round relative inline-flex min-h-11 items-center rounded-full px-4 text-[13px] transition-colors',
                       active || hover === item.to ? 'text-ink' : 'text-ink/60',
                     )}
                   >
@@ -204,10 +204,10 @@ export function Nav() {
         <div className="mt-10 grid gap-6 text-sm text-night-muted sm:grid-cols-2">
           <div>
             <p className="caps mb-2 text-white">Say hello</p>
-            <a className="block min-h-10 py-2 text-white underline-offset-4 hov:underline" href={`mailto:${SITE.email}`}>
+            <a className="block min-h-11 py-2 text-white underline-offset-4 hov:underline" href={`mailto:${SITE.email}`}>
               {SITE.email}
             </a>
-            <a className="block min-h-10 py-2 text-white underline-offset-4 hov:underline" href={`tel:${SITE.phone.replace(/\s/g, '')}`}>
+            <a className="block min-h-11 py-2 text-white underline-offset-4 hov:underline" href={`tel:${SITE.phone.replace(/\s/g, '')}`}>
               {SITE.phone}
             </a>
           </div>
@@ -216,7 +216,7 @@ export function Nav() {
             <ul className="grid grid-cols-2">
               {SITE.socials.map((s) => (
                 <li key={s.label}>
-                  <a className="block min-h-10 py-2 text-white underline-offset-4 hov:underline" href={s.href} target="_blank" rel="noreferrer">
+                  <a className="block min-h-11 py-2 text-white underline-offset-4 hov:underline" href={s.href} target="_blank" rel="noreferrer">
                     {s.label}
                   </a>
                 </li>
@@ -259,7 +259,7 @@ export function PageHero({
             initial={reduce ? undefined : { opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.3, ease: EASE }}
-            className="order-3 max-w-sm lg:order-1"
+            className="order-2 max-w-sm lg:order-1"
           >
             {eyebrow && <p className="caps mb-3 text-violet">{eyebrow}</p>}
             {intro && <p className="text-[17px] leading-relaxed text-pretty text-ink-2">{intro}</p>}
@@ -270,7 +270,7 @@ export function PageHero({
           <div
             className={cx(
               'pointer-events-none mx-auto w-[min(62vw,300px)] self-center lg:w-[min(22vw,340px)]',
-              hasCopy ? 'order-2 lg:-translate-x-[8%]' : 'order-2 lg:order-1 lg:justify-self-center',
+              hasCopy ? 'order-3 lg:order-2 lg:-translate-x-[8%]' : 'order-2 lg:order-1 lg:justify-self-center',
             )}
             aria-hidden
           >

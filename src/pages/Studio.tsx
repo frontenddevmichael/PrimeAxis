@@ -32,7 +32,7 @@ export function Studio() {
       </Section>
 
       <Section aria-labelledby="values-title" className="grid gap-10 px-5 py-10 sm:px-8 sm:py-14 lg:grid-cols-[1fr_1.1fr] lg:gap-14">
-        <div className="flex flex-col gap-10 lg:sticky lg:top-6 lg:self-start">
+        <div className="flex flex-col gap-10 lg:sticky lg:top-[5.5rem] lg:self-start">
           <Title id="values-title" lines={['What we', 'believe']} />
           <div className="w-[min(58%,280px)]" aria-hidden>
             <Holo kind="prism" motion />

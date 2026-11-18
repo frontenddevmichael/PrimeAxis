@@ -21,7 +21,7 @@ export function CaseStudy() {
     <div className="grid gap-2 p-2">
       <Section aria-labelledby="cs-title" className="px-5 pt-3 pb-6 sm:px-8 sm:pb-8">
         <Nav />
-        <Link to="/work" className="mt-8 inline-flex min-h-10 items-center gap-2 text-sm font-medium text-muted hov:text-ink">
+        <Link to="/work" className="mt-8 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-muted hov:text-ink">
           <ArrowLeft className="size-4" aria-hidden />
           All projects
         </Link>

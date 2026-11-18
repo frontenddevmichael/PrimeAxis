@@ -21,7 +21,7 @@ export function RolePage() {
     <div className="grid gap-2 p-2">
       <Section aria-labelledby="role-title" className="px-5 pt-3 pb-8 sm:px-8">
         <Nav />
-        <Link to="/careers" className="mt-8 inline-flex min-h-10 items-center gap-2 text-sm font-medium text-muted hov:text-ink">
+        <Link to="/careers" className="mt-8 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-muted hov:text-ink">
           <ArrowLeft className="size-4" aria-hidden />
           All roles
         </Link>
@@ -61,7 +61,7 @@ export function RolePage() {
             </ul>
           </div>
         </Card>
-        <Card as="section" aria-labelledby="apply-title" className="p-6 sm:p-8 lg:sticky lg:top-2">
+        <Card as="section" aria-labelledby="apply-title" className="p-6 sm:p-8 lg:sticky lg:top-[5.5rem]">
           <h2 id="apply-title" className="display mb-6 text-[2.2rem] leading-[0.92]">
             Apply for this role
           </h2>

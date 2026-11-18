@@ -5,14 +5,18 @@ import { ArrowLink, Badge, Photo, Reveal } from '../components/Bits'
 import { Card, Section } from '../components/Card'
 import { Nav } from '../components/Nav'
 import { PROJECTS } from '../data'
-import { useDocumentTitle } from '../lib/storage'
+import { usePageMeta } from '../lib/seo'
 import { NotFound } from './NotFound'
 
 export function CaseStudy() {
   const { slug } = useParams()
   const index = PROJECTS.findIndex((p) => p.slug === slug)
   const project = PROJECTS[index]
-  useDocumentTitle(project?.client ?? 'Project not found')
+  usePageMeta({
+    title: project?.client ?? 'Project not found',
+    description: project?.summary ?? 'That Prime Axis case study has moved or never existed.',
+    noindex: !project,
+  })
   if (!project) return <NotFound title="Project not found" body="That case study has moved or never existed. Have a look at the rest of our work." to="/work" action="All projects" />
   const next = PROJECTS[(index + 1) % PROJECTS.length]
   const [, second, third] = project.gallery

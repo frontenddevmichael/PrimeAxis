@@ -11,10 +11,14 @@ import { EASE } from '../components/Motion'
 import { PageHero } from '../components/Nav'
 import { ProjectCard } from '../components/ProjectCard'
 import { DISCIPLINES, PROJECTS } from '../data'
-import { useDocumentTitle } from '../lib/storage'
+import { usePageMeta } from '../lib/seo'
 
 export function Work() {
-  useDocumentTitle('Work')
+  usePageMeta({
+    title: 'Work',
+    description:
+      'Selected projects from Prime Axis: web platforms, product builds, performance rebuilds and automation systems for growing companies.',
+  })
   const [params, setParams] = useSearchParams()
   const discipline = params.get('d') ?? ''
   const query = params.get('q') ?? ''

@@ -3,6 +3,8 @@
 
 export const SITE = {
   name: 'Prime Axis',
+  /** Production origin, used for canonical links, Open Graph URLs and the sitemap. */
+  url: 'https://primeaxis.studio',
   tagline: 'Scalable web systems & business automation',
   email: 'hello@PrimeAxis.studio',
   phone: '+234 916 430 0395',

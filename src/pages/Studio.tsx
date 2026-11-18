@@ -1,18 +1,22 @@
 import { ArrowRight } from 'lucide-react'
 import { motion, useReducedMotion } from 'motion/react'
 
-import { ArrowLink, Badge, CountUp, Photo, Reveal, Title } from '../components/Bits'
+import { ArrowLink, CountUp, Reveal, Title } from '../components/Bits'
 import { ButtonLink } from '../components/Button'
-import { Card, Section } from '../components/Card'
+import { Section } from '../components/Card'
 import { Marquee } from '../components/Content'
 import { Holo } from '../components/Holo'
 import { EASE } from '../components/Motion'
 import { PageHero } from '../components/Nav'
-import { CLIENTS, STUDIO } from '../data'
-import { useDocumentTitle } from '../lib/storage'
+import { CLIENTS, IMAGES, STUDIO } from '../data'
+import { usePageMeta } from '../lib/seo'
 
 export function Studio() {
-  useDocumentTitle('Studio')
+  usePageMeta({
+    title: 'Studio',
+    description:
+      'Prime Axis is a remote-first studio of six: software engineers, product designers, brand and motion, building the systems growing companies run on.',
+  })
   const reduce = useReducedMotion()
   return (
     <div className="grid gap-2 p-2">
@@ -58,43 +62,45 @@ export function Studio() {
         </ul>
       </Section>
 
-      <section aria-labelledby="team-title" className="grid gap-2">
-        <Section as="div" className="grid gap-6 px-5 py-8 sm:px-8 sm:py-10 md:grid-cols-[1fr_auto] md:items-end">
+      <Section aria-labelledby="team-title" className="px-5 py-10 sm:px-8 sm:py-14">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
           <div>
-            <Title id="team-title" lines={['The people', 'behind PrimeAxis']} align="left" />
-            <p className="mt-4 max-w-md text-muted">{STUDIO.teamIntro}</p>
+            <p className="caps text-violet">/The team</p>
+            <Title id="team-title" lines={['The people', 'behind PrimeAxis']} align="left" className="mt-2" />
           </div>
-          <ArrowLink to="/careers">Join the team</ArrowLink>
-        </Section>
-        <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+          <ArrowLink to="/careers" size="sm" className="shrink-0">
+            Join the team
+          </ArrowLink>
+        </div>
+        <p className="mt-4 max-w-md text-[15px] text-muted">{STUDIO.teamIntro}</p>
+
+        <ul className="mt-8 grid grid-cols-2 gap-1 md:grid-cols-3">
           {STUDIO.team.map((m, i) => (
-            <li key={m.name}>
-              <Reveal delay={(i % 3) * 0.06} className="h-full">
-                <Card className="group flex h-full flex-col p-0">
-                  <Photo image={m.photo} ratio="4/5" zoom alt={`${m.name}, ${m.role}`} />
-                  <div className="flex flex-1 flex-col p-5 sm:p-6">
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <p className="text-lg leading-tight font-medium tracking-[-0.03em] sm:text-xl">{m.name}</p>
-                        <p className="mt-1 text-sm text-muted">{m.role}</p>
-                      </div>
-                      {m.tag && <Badge tone="violet">{m.tag}</Badge>}
-                    </div>
-                    <p className="mt-4 text-[15px] leading-snug text-muted">{m.bio}</p>
-                    <ul className="mt-auto flex flex-wrap gap-1.5 pt-5" aria-label={`${m.name} skills`}>
-                      {m.skills.map((s) => (
-                        <li key={s}>
-                          <Badge>{s}</Badge>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </Card>
+            <li
+              key={m.name}
+              tabIndex={0}
+              aria-label={`${m.name}, ${m.role}`}
+              className="team-tile relative overflow-hidden bg-soft focus-visible:outline-offset-[-4px]"
+            >
+              <Reveal delay={(i % 3) * 0.05}>
+                <img
+                  src={IMAGES[m.photo].src}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  className="aspect-[4/5] w-full object-cover sm:aspect-square"
+                />
+                <div className="team-tile__detail absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-night/90 via-night/35 to-transparent p-4 sm:p-5">
+                  {m.tag && <p className="caps text-violet-light">{m.tag}</p>}
+                  <p className="mt-1 text-[17px] leading-tight font-medium tracking-[-0.03em] text-white sm:text-xl">{m.name}</p>
+                  <p className="text-[13px] text-white/75">{m.role}</p>
+                  <p className="mt-2 hidden text-[13px] leading-snug text-white/70 sm:block">{m.bio}</p>
+                </div>
               </Reveal>
             </li>
           ))}
         </ul>
-      </section>
+      </Section>
 
       <Section aria-label="Clients" className="px-5 py-10 sm:px-8">
         <p className="caps mb-5 text-muted">Clients since 2024</p>

@@ -1,18 +1,16 @@
-import { ArrowRight } from 'lucide-react'
 import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from 'motion/react'
 import { useRef, useState, type PointerEvent } from 'react'
 
-import { ArrowLink, Reveal, Stat, Title } from '../components/Bits'
-import { ButtonLink } from '../components/Button'
+import { ArrowLink, Reveal, Title } from '../components/Bits'
 import { Card, Section } from '../components/Card'
 import { Marquee, TestimonialSlider } from '../components/Content'
 import { Holo } from '../components/Holo'
-import { EASE, Magnetic } from '../components/Motion'
+import { EASE, Magnetic, Rule } from '../components/Motion'
 import { ProjectCard } from '../components/ProjectCard'
 import { ServiceCard } from '../components/ServiceCard'
 import { APPROACH, CLIENTS, HOME, PROJECTS, SERVICES, SHOW_PROJECTS, TESTIMONIALS } from '../data'
 import { cx } from '../lib/cx'
-import { useDocumentTitle } from '../lib/storage'
+import { usePageMeta } from '../lib/seo'
 
 function Hero() {
   const reduce = useReducedMotion()
@@ -22,8 +20,8 @@ function Hero() {
   const sx = useSpring(px, { stiffness: 70, damping: 20, mass: 0.6 })
   const sy = useSpring(py, { stiffness: 70, damping: 20, mass: 0.6 })
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] as const })
-  const driftY = useTransform(scrollYProgress, [0, 1], [0, 190])
-  const driftRotate = useTransform(scrollYProgress, [0, 1], [0, 12])
+  const driftY = useTransform(scrollYProgress, [0, 1], [0, 120])
+  const driftRotate = useTransform(scrollYProgress, [0, 1], [0, 8])
 
   const move = (e: PointerEvent<HTMLElement>) => {
     if (reduce || e.pointerType !== 'mouse') return
@@ -57,7 +55,7 @@ function Hero() {
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               transition={{ duration: 1.4, ease: EASE }}
             >
-              <Holo kind="axis" motion priority />
+              <Holo kind="axis" priority />
             </motion.div>
           </motion.div>
         </motion.div>
@@ -112,19 +110,26 @@ function Services() {
   const shown = SERVICES.slice(0, 3)
   return (
     <section aria-labelledby="services-title" className="grid gap-2 md:grid-cols-2">
-      <Section as="div" className="flex min-h-[340px] flex-col p-6 sm:p-8 md:min-h-0">
+      <Section
+        as="div"
+        className="flex min-h-[340px] flex-col overflow-hidden p-6 sm:p-8 md:sticky md:top-[5.5rem] md:self-start"
+      >
         <Title id="services-title" lines={HOME.servicesTitle} className="relative z-10 self-end" />
-        <div aria-hidden className="pointer-events-none absolute bottom-[-16%] left-[-6%] w-[min(78%,480px)]">
-          <Holo kind="sphere" motion />
+        {/* The object owns the row below the heading, so it can never sit on the type at any width */}
+        {/* mt-10 clears the float's 20px rise plus the 3deg tilt at its peak */}
+        <div className="mt-10 flex flex-1 items-end justify-between gap-4">
+          <div aria-hidden className="pointer-events-none w-[min(52%,300px)] shrink-0">
+            <Holo kind="sphere" motion />
+          </div>
+          <ArrowLink to="/services" tone="ink" size="sm" className="relative z-10 mb-1 shrink-0">
+            Explore services
+          </ArrowLink>
         </div>
-        <ArrowLink to="/services" tone="ink" size="sm" className="relative z-10 mt-auto self-end">
-          Explore services
-        </ArrowLink>
       </Section>
       <ul className="grid gap-2">
         {shown.map((s, i) => (
           <li key={s.slug}>
-            <Reveal delay={i * 0.06} className="h-full">
+            <Reveal delay={i * 0.06} y={16} className="h-full">
               <ServiceCard service={s} active={active === i} onActivate={() => setActive(i)} />
             </Reveal>
           </li>
@@ -137,16 +142,9 @@ function Services() {
 function Manifesto() {
   return (
     <Section aria-labelledby="manifesto-title" className="grid gap-10 px-5 py-10 sm:px-8 sm:py-14 lg:grid-cols-[1.1fr_1fr] lg:items-end lg:gap-14">
-      <div className="flex flex-col gap-10">
-        <Reveal>
-          <Title id="manifesto-title" lines={HOME.manifestoTitle} align="left" size="lg" />
-        </Reveal>
-        <div className="grid max-w-lg grid-cols-3 gap-4">
-          {HOME.stats.map((s) => (
-            <Stat key={s.value} value={s.value} label={s.label} align="left" />
-          ))}
-        </div>
-      </div>
+      <Reveal>
+        <Title id="manifesto-title" lines={HOME.manifestoTitle} align="left" size="lg" />
+      </Reveal>
       <div className="flex flex-col items-start gap-6">
         <p className="max-w-[26rem] text-[clamp(1.25rem,1rem+1vw,1.9rem)] leading-[1.25] tracking-[-0.03em] text-ink-2">{HOME.manifesto}</p>
         <ArrowLink to="/studio" tone="ink" size="sm">
@@ -161,13 +159,14 @@ function Approach() {
   return (
     <Section aria-labelledby="approach-title" className="grid gap-8 px-5 py-10 sm:px-8 sm:py-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-12">
       <div className="flex flex-col gap-6 lg:sticky lg:top-[5.5rem] lg:self-start">
+        <Rule className="w-14" />
         <Title id="approach-title" lines={HOME.approachTitle} align="left" />
         <p className="max-w-sm text-muted">Four habits that shape every project, whatever its size.</p>
       </div>
       <ul className="grid gap-2 sm:grid-cols-2">
         {APPROACH.map((a, i) => (
           <li key={a.title} className="h-full">
-            <Reveal delay={i * 0.06} className="h-full">
+            <Reveal delay={i * 0.06} y={16} className="h-full">
               <Card tone={a.tone} className="flex h-full min-h-[320px] flex-col p-6 sm:p-7">
                 <p className={cx('caps tabular-nums', a.tone === 'white' ? 'text-muted' : 'text-white/80')}>0{i + 1}</p>
                 <h3 className="mt-2 self-end text-right text-[clamp(1.35rem,1.05rem+0.8vw,1.75rem)] leading-[1.05] tracking-[-0.03em] uppercase">
@@ -212,7 +211,10 @@ function Testimony() {
   return (
     <section id="testimony" aria-labelledby="testimony-title" className="grid scroll-mt-4 gap-2 lg:grid-cols-[1fr_1.45fr]">
       <Section as="div" className="flex min-h-[320px] flex-col justify-between gap-8 px-5 py-8 sm:px-8 sm:py-10">
-        <Title id="testimony-title" lines={HOME.testimonyTitle} align="left" />
+        <div className="flex flex-col gap-6">
+          <Rule className="w-14" />
+          <Title id="testimony-title" lines={HOME.testimonyTitle} align="left" />
+        </div>
         <div className="flex items-end justify-between gap-6">
           <div className="w-28" aria-hidden>
             <Holo kind="star" motion />
@@ -239,51 +241,8 @@ function Clients() {
   )
 }
 
-function Cta() {
-  const reduce = useReducedMotion()
-  const reveal = (i = 0) =>
-    reduce
-      ? {}
-      : {
-          initial: { opacity: 0, y: 24 },
-          whileInView: { opacity: 1, y: 0 },
-          viewport: { once: true, amount: 0.3 },
-          transition: { duration: 0.8, delay: i * 0.1, ease: EASE },
-        }
-
-  return (
-    <Section aria-labelledby="cta-title" className="relative overflow-hidden px-5 py-14 sm:px-8 sm:py-20">
-      <div className="grid items-center gap-10 md:grid-cols-[1.1fr_0.9fr] md:gap-6">
-        <div className="flex flex-col items-start gap-7">
-          <motion.p {...reveal(0)} className="caps text-violet">
-            /Let’s talk
-          </motion.p>
-          <motion.div {...reveal(1)}>
-            <Title id="cta-title" lines={HOME.cta.title} size="lg" />
-          </motion.div>
-          <motion.p {...reveal(2)} className="max-w-md text-[17px] leading-relaxed text-pretty text-muted">
-            {HOME.cta.body}
-          </motion.p>
-          <motion.div {...reveal(3)} className="flex flex-wrap items-center gap-x-6 gap-y-3">
-            <Magnetic strength={6}>
-              <ButtonLink to="/contact" variant="violet" size="lg" iconRight={<ArrowRight className="size-5" />}>
-                {HOME.cta.action}
-              </ButtonLink>
-            </Magnetic>
-
-          </motion.div>
-        </div>
-
-        <motion.div {...reveal(1)} aria-hidden className="mx-auto w-[min(60vw,320px)] md:mr-0 md:ml-auto md:w-full md:max-w-[520px]">
-          <Holo kind="cloud" motion />
-        </motion.div>
-      </div>
-    </Section>
-  )
-}
-
 export function Home() {
-  useDocumentTitle()
+  usePageMeta()
   return (
     <div className="grid gap-2 p-2">
       <Hero />
@@ -293,7 +252,6 @@ export function Home() {
       {SHOW_PROJECTS && <Work />}
       <Testimony />
       <Clients />
-      <Cta />
     </div>
   )
 }

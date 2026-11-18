@@ -11,8 +11,13 @@ import { Drift } from '../components/Motion'
 import { PageHero } from '../components/Nav'
 import { FAQ, PROCESS, SERVICE_CTA, SERVICES, SITE, type Service } from '../data'
 import { cx } from '../lib/cx'
-import { useDocumentTitle } from '../lib/storage'
+import { usePageMeta } from '../lib/seo'
 
+/*
+  A tight 12-column bento: the lead panel takes half the width and both rows,
+  the other four take a quarter each. Everything is deliberately short, so the
+  five services fit one screen instead of running past it.
+*/
 const SERVICE_LAYOUT: Array<{
   className: string
   tone: CardTone
@@ -22,40 +27,40 @@ const SERVICE_LAYOUT: Array<{
   align?: 'left' | 'right'
 }> = [
   {
-    className: 'md:col-span-2 lg:col-span-7 lg:row-span-2 min-h-[440px] lg:min-h-[560px]',
+    className: 'md:col-span-2 lg:col-span-6 lg:row-span-2 min-h-[380px] lg:min-h-[468px]',
     tone: 'violet',
-    artClassName: 'right-[-8%] top-[4%] w-[52%] max-w-[360px]',
-    contentClassName: 'max-w-[34rem]',
+    artClassName: 'right-[-12%] top-[2%] w-[44%] max-w-[280px]',
+    contentClassName: 'max-w-[26rem]',
     scrimClassName: 'from-violet via-violet/60',
   },
   {
-    className: 'lg:col-span-5 min-h-[260px]',
+    className: 'lg:col-span-3 min-h-[228px]',
     tone: 'white',
-    artClassName: 'right-[-8%] top-[-6%] w-[38%] max-w-[180px]',
-    contentClassName: 'max-w-[24rem]',
-    scrimClassName: 'from-card via-card/75',
+    artClassName: 'right-[-8%] top-[-12%] w-[34%] max-w-[118px]',
+    contentClassName: 'max-w-[17rem]',
+    scrimClassName: 'from-card via-card/80',
   },
   {
-    className: 'lg:col-span-5 min-h-[260px]',
+    className: 'lg:col-span-3 min-h-[228px]',
     tone: 'soft',
-    artClassName: 'left-[-10%] top-[-8%] w-[40%] max-w-[190px]',
-    contentClassName: 'max-w-[24rem]',
-    scrimClassName: 'from-soft via-soft/75',
+    artClassName: 'left-[-10%] top-[-12%] w-[34%] max-w-[118px]',
+    contentClassName: 'max-w-[17rem]',
+    scrimClassName: 'from-soft via-soft/80',
     align: 'right',
   },
   {
-    className: 'lg:col-span-5 min-h-[320px]',
+    className: 'lg:col-span-3 min-h-[228px]',
     tone: 'white',
-    artClassName: 'right-[-10%] top-[-4%] w-[46%] max-w-[200px]',
-    contentClassName: 'max-w-[26rem]',
-    scrimClassName: 'from-card via-card/75',
+    artClassName: 'right-[-10%] top-[-10%] w-[36%] max-w-[124px]',
+    contentClassName: 'max-w-[17rem]',
+    scrimClassName: 'from-card via-card/80',
   },
   {
-    className: 'lg:col-span-7 min-h-[320px]',
+    className: 'lg:col-span-3 min-h-[228px]',
     tone: 'night',
-    artClassName: 'right-[-4%] top-[-8%] w-[30%] max-w-[270px]',
-    contentClassName: 'max-w-[32rem]',
-    scrimClassName: 'from-night via-night/75',
+    artClassName: 'right-[-6%] top-[-12%] w-[32%] max-w-[128px]',
+    contentClassName: 'max-w-[17rem]',
+    scrimClassName: 'from-night via-night/80',
   },
 ]
 
@@ -79,49 +84,62 @@ function ServicePanel({
   align?: 'left' | 'right'
 }) {
   const dark = tone === 'violet' || tone === 'night'
+  const lead = index === 0
   return (
     <Card
       id={service.slug}
       aria-labelledby={`${service.slug}-title`}
       tone={tone}
-      className={cx('group relative flex h-full flex-col overflow-hidden scroll-mt-14 p-6 sm:p-8', className)}
+      className={cx('group relative flex h-full flex-col overflow-hidden scroll-mt-14 p-5 sm:p-6', className)}
     >
-      <div className="relative z-10 flex items-start justify-between gap-4">
+      <div className="relative z-10 flex items-start justify-between gap-3">
         <p className={cx('caps tabular-nums', dark ? 'text-white/55' : 'text-muted')}>0{index + 1}</p>
         {service.tag && <Badge tone={dark ? 'light' : 'violet'}>{service.tag}</Badge>}
       </div>
       <div
         aria-hidden
-        className={cx('pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[72%] bg-gradient-to-t to-transparent', scrimClassName)}
+        className={cx('pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[58%] bg-gradient-to-t to-transparent', scrimClassName)}
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[54%] backdrop-blur-[3px]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[42%] backdrop-blur-[3px]"
         style={{ maskImage: 'linear-gradient(to top, black 48%, transparent 100%)' }}
       />
-      <div className={cx('relative z-10 mt-auto pt-20', contentClassName, align === 'right' && 'ml-auto text-right')}>
+      <div className={cx('relative z-10 mt-auto pt-10', contentClassName, align === 'right' && 'ml-auto text-right')}>
         <h2
           id={`${service.slug}-title`}
-          className={cx('display max-w-[15ch] text-[clamp(2.1rem,1.2rem+2.4vw,4rem)] leading-[0.9] text-balance', align === 'right' && 'ml-auto')}
+          className={cx(
+            'display max-w-[16ch] leading-[0.9] text-balance',
+            lead ? 'text-[clamp(1.7rem,1.1rem+1.8vw,2.5rem)]' : 'text-[clamp(1.2rem,1rem+0.7vw,1.55rem)]',
+            align === 'right' && 'ml-auto',
+          )}
         >
           {service.title}
         </h2>
-        <p className={cx('mt-4 max-w-md text-pretty text-[15px] leading-snug', dark ? 'text-white/75' : 'text-ink-2', align === 'right' && 'ml-auto')}>
+        <p
+          className={cx(
+            'mt-3 max-w-md text-pretty text-[14px] leading-snug',
+            dark ? 'text-white/75' : 'text-ink-2',
+            align === 'right' && 'ml-auto',
+          )}
+        >
           {service.intro}
         </p>
-        <ul className={cx('mt-5 flex flex-wrap gap-1.5', align === 'right' && 'justify-end')} aria-label={`${service.title} deliverables`}>
-          {service.deliverables.map((d) => (
-            <li
-              key={d}
-              className={cx(
-                'round inline-flex min-h-7 items-center rounded-full border px-3 text-[12px] font-medium',
-                dark ? 'border-white/20 text-white/75' : 'border-line text-muted',
-              )}
-            >
-              {d}
-            </li>
-          ))}
-        </ul>
+        {lead && (
+          <ul className={cx('mt-4 flex flex-wrap gap-1.5', align === 'right' && 'justify-end')} aria-label={`${service.title} deliverables`}>
+            {service.deliverables.slice(0, 3).map((d) => (
+              <li
+                key={d}
+                className={cx(
+                  'round inline-flex h-6 items-center rounded-full border px-2.5 text-[11px] font-medium',
+                  dark ? 'border-white/20 text-white/75' : 'border-line text-muted',
+                )}
+              >
+                {d}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
       <div
         aria-hidden
@@ -224,7 +242,11 @@ function Process() {
 }
 
 export function Services() {
-  useDocumentTitle('Services')
+  usePageMeta({
+    title: 'Services',
+    description:
+      'Custom web development, digital products, UI/UX and performance rebuilds. What Prime Axis builds, how a project runs, and what it costs.',
+  })
   return (
     <div className="grid gap-2 p-2">
       <PageHero title={['What', 'we do']} art={<Holo kind="sphere" motion />} compact />
@@ -249,6 +271,18 @@ export function Services() {
         })}
       </div>
 
+      <Process />
+
+      <Section aria-labelledby="faq-title" className="grid gap-8 px-5 py-10 sm:px-8 sm:py-14 lg:grid-cols-[1fr_1.6fr]">
+        <div className="flex flex-col justify-between gap-8">
+          <Title id="faq-title" lines={['Questions', 'we hear']} align="left" />
+          <ArrowLink to="/contact" size="sm">
+            Ask us something else
+          </ArrowLink>
+        </div>
+        <Accordion items={FAQ} />
+      </Section>
+
       <Card aria-labelledby="service-cta-title" tone="violet" className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-end">
         <div>
           <p className="caps text-white/60">{SERVICE_CTA.eyebrow}</p>
@@ -265,18 +299,6 @@ export function Services() {
             <ArrowUpRight className="size-4" aria-hidden />
           </a>
         </div>
-      </Card>
-
-      <Process />
-
-      <Card as="section" aria-labelledby="faq-title" className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1fr_1.6fr]">
-        <div className="flex flex-col justify-between gap-8">
-          <Title id="faq-title" lines={['Questions', 'we hear']} align="left" />
-          <ArrowLink to="/contact" size="sm">
-            Ask us something else
-          </ArrowLink>
-        </div>
-        <Accordion items={FAQ} />
       </Card>
     </div>
   )

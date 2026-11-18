@@ -10,7 +10,8 @@ import { EASE } from '../components/Motion'
 import { PageHero } from '../components/Nav'
 import { CONTACT, SITE } from '../data'
 import { cx } from '../lib/cx'
-import { KEYS, useDocumentTitle, usePersistentState, type SentBrief } from '../lib/storage'
+import { usePageMeta } from '../lib/seo'
+import { KEYS, usePersistentState, type SentBrief } from '../lib/storage'
 
 const EMAIL = 'hello@primeaxis.studio'
 
@@ -93,10 +94,14 @@ function SlideLink({ href, children, className }: { href: string; children: Reac
 }
 
 export function Contact() {
-  useDocumentTitle('Start a project')
+  usePageMeta({
+    title: 'Start a project',
+    description:
+      'Tell us what you are building and we will reply within 24 hours with a focused plan. Or book a free 15-minute call with the Prime Axis team.',
+  })
   const [briefs, setBriefs] = usePersistentState<SentBrief[]>(KEYS.briefs, [])
   return (
-    <div className="grid gap-2 p-2">
+    <div className="grid gap-2 bg-card p-2">
       <PageHero title={CONTACT.title} art={<Holo kind="cloud" motion />} />
 
       {/* Container draws the top/left edge; every cell draws its own right/bottom */}

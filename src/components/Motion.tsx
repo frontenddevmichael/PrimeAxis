@@ -99,3 +99,21 @@ export function Drift({
     </motion.div>
   )
 }
+
+/**
+ * A hairline that draws itself from the left the first time it is seen. The
+ * second entrance gesture: cards lift a short distance, headings get a rule.
+ */
+export function Rule({ className, delay = 0 }: { className?: string; delay?: number }) {
+  const reduce = useReducedMotion()
+  return (
+    <motion.span
+      aria-hidden
+      initial={reduce ? undefined : { scaleX: 0 }}
+      whileInView={{ scaleX: 1 }}
+      viewport={{ once: true, margin: '0px 0px -12% 0px' }}
+      transition={{ duration: 0.9, delay, ease: EASE }}
+      className={cx('block h-px origin-left bg-line-strong', className)}
+    />
+  )
+}

@@ -7,13 +7,17 @@ import { Card, Section } from '../components/Card'
 import { Nav } from '../components/Nav'
 import { RoleRow } from '../components/RoleRow'
 import { ROLES } from '../data'
-import { useDocumentTitle } from '../lib/storage'
+import { usePageMeta } from '../lib/seo'
 import { NotFound } from './NotFound'
 
 export function RolePage() {
   const { slug } = useParams()
   const role = ROLES.find((r) => r.slug === slug)
-  useDocumentTitle(role?.title ?? 'Role not found')
+  usePageMeta({
+    title: role?.title ?? 'Role not found',
+    description: role?.summary ?? 'That role has been filled or closed. See what is open at Prime Axis now.',
+    noindex: !role,
+  })
   if (!role) return <NotFound title="Role not found" body="That role has been filled or closed. Have a look at what is open now." to="/careers" action="Open roles" />
   const others = ROLES.filter((r) => r.slug !== role.slug).slice(0, 2)
 

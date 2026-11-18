@@ -18,7 +18,7 @@ import { RoleRow } from '../components/RoleRow'
 import { ServiceCard } from '../components/ServiceCard'
 import { CLIENTS, CONTACT, FAQ, PROJECTS, ROLES, SERVICES, TESTIMONIALS, type HoloKind } from '../data'
 import { cx } from '../lib/cx'
-import { useDocumentTitle } from '../lib/storage'
+import { usePageMeta } from '../lib/seo'
 
 // Mirrors @theme in src/styles.css.
 const COLORS = [
@@ -192,7 +192,11 @@ function MotionDemo() {
 }
 
 export function Styleguide() {
-  useDocumentTitle('Style guide')
+  usePageMeta({
+    title: 'Style guide',
+    description: 'The Prime Axis design system: tokens, type, colour, components and motion, drawn with the components the site runs on.',
+    noindex: true,
+  })
   const [modal, setModal] = useState(false)
   const [multi, setMulti] = useState<string[]>(['Brand identity'])
   const [single, setSingle] = useState<string>('€20k–50k')

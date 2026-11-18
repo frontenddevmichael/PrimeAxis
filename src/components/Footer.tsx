@@ -7,7 +7,6 @@ import { FOOTER, HOME, MENU, SHOW_PROJECTS, SITE } from '../data'
 import { postJson } from '../lib/api'
 import { cx } from '../lib/cx'
 import { validateSubscribe } from '../shared/validation'
-import { Logo } from './Bits'
 import { IconButton } from './Button'
 import { EASE } from './Motion'
 
@@ -231,18 +230,6 @@ export function Footer() {
           Prime <LogoMark className="mx-[0.02em] inline-block h-[0.7em] w-auto align-baseline" />xis
         </motion.p>
 
-        <motion.div
-          {...reveal()}
-          className="mt-4 flex flex-col items-start justify-between gap-3 border-t border-line pt-5 text-[13px] text-muted sm:flex-row sm:items-center"
-        >
-          <span className="flex items-center gap-2">
-            <Logo className="[&_svg]:size-5" />
-            {FOOTER.legal}
-          </span>
-          <a href="#top" className="inline-flex min-h-11 items-center transition-colors hov:text-violet">
-            Back to top
-          </a>
-        </motion.div>
       </div>
     </footer>
   )

@@ -6,7 +6,7 @@ import { Section } from '../components/Card'
 import { Holo } from '../components/Holo'
 import { Nav } from '../components/Nav'
 import { SHOW_PROJECTS } from '../data'
-import { useDocumentTitle } from '../lib/storage'
+import { usePageMeta } from '../lib/seo'
 
 export function NotFound({
   title = 'Page not found',
@@ -19,7 +19,7 @@ export function NotFound({
   to?: string
   action?: string
 }) {
-  useDocumentTitle(title)
+  usePageMeta({ title, description: body, noindex: true })
   return (
     <div className="p-2">
       <Section aria-labelledby="nf-title" className="relative overflow-hidden px-5 pt-3 pb-8 sm:px-8">

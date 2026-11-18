@@ -1,5 +1,13 @@
 @import 'tailwindcss';
 
+@font-face {
+  font-family: 'Inter Tight';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-tight-latin.woff2') format('woff2');
+}
+
 /*
   Lastwerk design tokens. The page is a pale grey canvas holding white panels
   ("cards") with big radii, set in one tight grotesk. Violet is the only
@@ -240,4 +248,38 @@
 
 .marquee-mask {
   mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+}
+
+/*
+  Team portraits: the caption rises over the photo where hovering is
+  possible. On touch screens, and with reduced motion, it simply stays.
+*/
+.team-tile img {
+  transition:
+    filter var(--duration-slow) ease,
+    transform 900ms var(--ease-out-soft);
+}
+.team-tile__detail {
+  transition:
+    opacity var(--duration-base) ease,
+    transform var(--duration-base) var(--ease-out-soft);
+}
+@media (hover: hover) {
+  .team-tile img {
+    filter: grayscale(1);
+  }
+  .team-tile__detail {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  .team-tile:hover img,
+  .team-tile:focus-visible img {
+    filter: none;
+    transform: scale(1.04);
+  }
+  .team-tile:hover .team-tile__detail,
+  .team-tile:focus-visible .team-tile__detail {
+    opacity: 1;
+    transform: none;
+  }
 }

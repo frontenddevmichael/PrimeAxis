@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { SITE } from '../data'
-
 /** Keys for everything the site keeps in the browser. */
 export const KEYS = {
   briefDraft: 'lastwerk:brief-draft',
@@ -38,12 +36,6 @@ export function usePersistentState<T>(key: string, initial: T) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key])
   return [value, setValue, clear] as const
-}
-
-export function useDocumentTitle(title?: string) {
-  useEffect(() => {
-    document.title = title ? `${title} — ${SITE.name}` : `${SITE.name} — ${SITE.tagline}`
-  }, [title])
 }
 
 export type SentBrief = { reference: string; sentAt: string; services: string[]; budget: string; name: string }

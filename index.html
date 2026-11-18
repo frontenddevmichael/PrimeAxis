@@ -7,10 +7,39 @@
     <meta name="theme-color" content="#e9e9ec" />
     <title>Prime Axis — Scalable Web Systems & Business Automation</title>
     <meta name="description" content="Prime Axis helps businesses streamline operations with high-performance websites and scalable automation systems. Built for growth, speed, and long-term reliability." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="canonical" href="https://primeaxis.studio/" />
+    <meta name="robots" content="index, follow" />
+    <!-- Social cards. Crawlers do not run the app, so these stay on the home defaults;
+         usePageMeta keeps them in step with the route in the browser. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Prime Axis" />
+    <meta property="og:title" content="Prime Axis — Scalable Web Systems & Business Automation" />
+    <meta property="og:description" content="Prime Axis helps businesses streamline operations with high-performance websites and scalable automation systems. Built for growth, speed, and long-term reliability." />
+    <meta property="og:url" content="https://primeaxis.studio/" />
+    <meta property="og:image" content="https://primeaxis.studio/og.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Prime Axis chrome mark on a pale background" />
+    <meta property="og:locale" content="en_GB" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Prime Axis — Scalable Web Systems & Business Automation" />
+    <meta name="twitter:description" content="Prime Axis helps businesses streamline operations with high-performance websites and scalable automation systems. Built for growth, speed, and long-term reliability." />
+    <meta name="twitter:image" content="https://primeaxis.studio/og.png" />
+    <meta name="twitter:image:alt" content="Prime Axis chrome mark on a pale background" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script>
+      // Only the home hero uses the axis render; do not waste a preload on deep links.
+      // Low priority keeps the render-blocking CSS first; the bytes are ready before React paints.
+      if (location.pathname === '/' || location.pathname === '') {
+        const link = document.createElement('link')
+        link.rel = 'preload'
+        link.as = 'image'
+        link.href = '/images/holo/axis.webp'
+        link.setAttribute('fetchpriority', 'low')
+        document.head.appendChild(link)
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

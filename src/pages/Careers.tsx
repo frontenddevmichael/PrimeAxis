@@ -4,10 +4,15 @@ import { Holo } from '../components/Holo'
 import { PageHero } from '../components/Nav'
 import { RoleRow } from '../components/RoleRow'
 import { CAREERS, ROLES } from '../data'
-import { KEYS, useDocumentTitle, usePersistentState, type SentApplication } from '../lib/storage'
+import { usePageMeta } from '../lib/seo'
+import { KEYS, usePersistentState, type SentApplication } from '../lib/storage'
 
 export function Careers() {
-  useDocumentTitle('Careers')
+  usePageMeta({
+    title: 'Careers',
+    description:
+      'Open roles at Prime Axis: brand design, product design, 3D and motion, new business. Remote-first, small senior teams, four-day weeks in August.',
+  })
   const [applications] = usePersistentState<SentApplication[]>(KEYS.applications, [])
   return (
     <div className="grid gap-2 p-2">

@@ -19,6 +19,9 @@ const RENDER = {
   star: IMAGES.holoStar,
   prism: IMAGES.holoPrism,
   axis: IMAGES.holoAxis,
+  aperture: IMAGES.holoAperture,
+  strata: IMAGES.holoStrata,
+  orbit: IMAGES.holoOrbit,
 } satisfies Record<HoloKind, { src: string }>
 const IRI = [
   [0, '#1f0679'],
@@ -140,6 +143,9 @@ export function HoloSvg({ kind, motion = false, className, ...rest }: Omit<Props
         {kind === 'star' && <Star url={url} />}
         {kind === 'prism' && <Prism url={url} />}
         {kind === 'axis' && <Axis url={url} />}
+        {kind === 'aperture' && <Aperture url={url} />}
+        {kind === 'strata' && <Strata url={url} />}
+        {kind === 'orbit' && <Orbit url={url} />}
       </g>
     </svg>
   )
@@ -245,6 +251,66 @@ function Prism({ url }: Draw) {
       <path d="M300 60 L 80 470 L 300 540 Z" fill={url('iri2')} stroke={url('edge')} strokeWidth="5" strokeLinejoin="round" />
       <path d="M300 70 L 300 530" stroke="#fff" strokeWidth="5" opacity="0.85" filter={url('soft')} />
       <path d="M110 462 L 296 70" stroke="#fff" strokeWidth="3" opacity="0.5" filter={url('soft')} />
+    </>
+  )
+}
+
+/** Iris of overlapping blades around a hexagon: focus and speed. */
+function Aperture({ url }: Draw) {
+  return (
+    <>
+      <circle cx="300" cy="300" r="232" fill="none" stroke={url('edge')} strokeWidth="36" />
+      <circle cx="300" cy="300" r="232" fill="none" stroke={url('iri2')} strokeWidth="22" />
+      <circle cx="300" cy="300" r="214" fill="none" stroke={url('iri')} strokeWidth="16" />
+      {[0, 60, 120, 180, 240, 300].map((a, i) => (
+        <g key={a} transform={`rotate(${a} 300 300)`}>
+          <path
+            d="M300 300 Q 300 148 418 166 L 418 258 Q 378 290 300 300 Z"
+            fill={url(i % 2 ? 'iri' : 'iri3')}
+            stroke={url('edge')}
+            strokeWidth="4"
+            opacity="0.95"
+          />
+        </g>
+      ))}
+      <path d="M300 248 L346 274 L346 326 L300 352 L254 326 L254 274 Z" fill={url('glass')} stroke={url('edge')} strokeWidth="4" />
+    </>
+  )
+}
+
+/** Four plates hovering in a stack: the layers a business runs on. */
+function Strata({ url }: Draw) {
+  return (
+    <>
+      {[0, 1, 2, 3].map((i) => {
+        const y = 168 + i * 92
+        return (
+          <g key={i}>
+            <path d={`M110 ${y} L300 ${y - 58} L490 ${y} L300 ${y + 58} Z`} fill={url(i % 2 ? 'iri2' : 'iri')} stroke={url('edge')} strokeWidth="5" strokeLinejoin="round" />
+            <path d={`M110 ${y} L300 ${y + 58} L300 ${y + 82} L110 ${y + 24} Z`} fill={url('edge')} opacity="0.9" />
+            <path d={`M490 ${y} L300 ${y + 58} L300 ${y + 82} L490 ${y + 24} Z`} fill={url('iri3')} opacity="0.9" />
+            <path d={`M138 ${y - 4} L300 ${y - 50} L452 ${y - 6}`} fill="none" stroke="#fff" strokeOpacity="0.55" strokeWidth="4" filter={url('soft')} />
+          </g>
+        )
+      })}
+    </>
+  )
+}
+
+/** A sphere held inside two tilted rings: systems orbiting a stable core. */
+function Orbit({ url }: Draw) {
+  return (
+    <>
+      <circle cx="300" cy="300" r="148" fill={url('orb')} />
+      <ellipse cx="245" cy="238" rx="54" ry="30" fill="#fff" opacity="0.45" filter={url('blur')} />
+      <g transform="rotate(-18 300 300)">
+        <ellipse cx="300" cy="300" rx="242" ry="78" fill="none" stroke={url('edge')} strokeWidth="26" />
+        <ellipse cx="300" cy="300" rx="242" ry="78" fill="none" stroke={url('iri2')} strokeWidth="17" />
+      </g>
+      <g transform="rotate(62 300 300)">
+        <ellipse cx="300" cy="300" rx="200" ry="150" fill="none" stroke={url('edge')} strokeWidth="24" />
+        <ellipse cx="300" cy="300" rx="200" ry="150" fill="none" stroke={url('iri')} strokeWidth="15" />
+      </g>
     </>
   )
 }

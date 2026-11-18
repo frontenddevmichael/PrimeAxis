@@ -249,7 +249,7 @@ export function Services() {
   })
   return (
     <div className="grid gap-2 p-2">
-      <PageHero title={['What', 'we do']} art={<Holo kind="sphere" motion />} compact />
+      <PageHero title={['What', 'we do']} art={<Holo kind="orbit" motion />} compact />
 
       <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-12">
         {SERVICES.map((s, i) => {

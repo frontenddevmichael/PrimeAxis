@@ -119,7 +119,7 @@ function Services() {
         {/* mt-10 clears the float's 20px rise plus the 3deg tilt at its peak */}
         <div className="mt-10 flex flex-1 items-end justify-between gap-4">
           <div aria-hidden className="pointer-events-none w-[min(52%,300px)] shrink-0">
-            <Holo kind="sphere" motion />
+            <Holo kind="strata" motion />
           </div>
           <ArrowLink to="/services" tone="ink" size="sm" className="relative z-10 mb-1 shrink-0">
             Explore services

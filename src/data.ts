@@ -65,6 +65,9 @@ export const IMAGES = {
   holoStar: { src: '/images/holo/star.webp', alt: '' },
   holoPrism: { src: '/images/holo/prism.webp', alt: '' },
   holoAxis: { src: '/images/holo/axis.webp', alt: '' },
+  holoAperture: { src: '/images/holo/aperture.webp', alt: '' },
+  holoStrata: { src: '/images/holo/strata.webp', alt: '' },
+  holoOrbit: { src: '/images/holo/orbit.webp', alt: '' },
   teamMichael: { src: '/images/team/michael.webp', alt: 'Omale Michael, Software Developer at Prime Axis' },
   teamGrace: { src: '/images/team/grace.webp', alt: 'Grace Ufah, Graphic Designer at Prime Axis' },
   teamGodswill: { src: '/images/team/godswill.webp', alt: 'Omale Godswill, UI/UX Designer at Prime Axis' },
@@ -106,7 +109,7 @@ export type Service = {
   intro: string
   deliverables: string[]
 }
-export type HoloKind = 'knot' | 'sphere' | 'cloud' | 'scissors' | 'star' | 'prism' | 'axis'
+export type HoloKind = 'knot' | 'sphere' | 'cloud' | 'scissors' | 'star' | 'prism' | 'axis' | 'aperture' | 'strata' | 'orbit'
 
 export const SERVICES: Service[] = [
   {
@@ -141,7 +144,7 @@ export const SERVICES: Service[] = [
     title: 'Redesign & performance optimisation',
     short: 'Slow sites, rebuilt fast',
     tag: 'Performance',
-    art: 'sphere',
+    art: 'aperture',
     intro: 'Fast, modern rebuilds of slow or outdated sites.',
     deliverables: ['UI modernisation', 'Core Web Vitals', 'SEO structure', 'Mobile responsiveness'],
   },

@@ -84,7 +84,7 @@ const BUTTONS: ButtonVariant[] = ['solid', 'violet', 'outline', 'ghost', 'light'
 const ICON_TONES: IconTone[] = ['ink', 'outline', 'violet', 'light']
 const BADGES: BadgeTone[] = ['neutral', 'violet', 'outline', 'success', 'light']
 const CARDS: CardTone[] = ['white', 'soft', 'violet', 'night']
-const HOLOS: HoloKind[] = ['knot', 'sphere', 'cloud', 'scissors', 'star', 'prism']
+const HOLOS: HoloKind[] = ['knot', 'sphere', 'cloud', 'scissors', 'star', 'prism', 'axis', 'aperture', 'strata', 'orbit']
 
 const SECTIONS = [
   ['colour', 'Colour'],

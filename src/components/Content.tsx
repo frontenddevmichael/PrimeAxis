@@ -31,7 +31,7 @@ export function Marquee({ items, className }: { items: string[]; className?: str
   )
 }
 
-type Quote = { quote: string; name: string; role: string }
+type Quote = { quote: string; name: string }
 
 /** One quote at a time with previous/next buttons and a position readout. */
 export function TestimonialSlider({ items, tone = 'violet' }: { items: Quote[]; tone?: 'violet' | 'white' }) {
@@ -58,9 +58,9 @@ export function TestimonialSlider({ items, tone = 'violet' }: { items: Quote[]; 
             aria-label={`${i + 1} of ${items.length}`}
           >
             <blockquote className="text-[clamp(1.4rem,1rem+1.3vw,2.4rem)] leading-[1.08] font-normal tracking-[-0.035em] text-balance">“{q.quote}”</blockquote>
-            <figcaption className="mt-6">
-              <span className="block font-medium">{q.name}</span>
-              <span className={cx('block text-sm', light ? 'text-white/80' : 'text-muted')}>{q.role}</span>
+            <figcaption className="mt-6 flex items-center gap-3">
+              <span aria-hidden className={cx('h-px w-6', light ? 'bg-white/60' : 'bg-ink/25')} />
+              <span className="font-medium">{q.name}</span>
             </figcaption>
           </motion.figure>
         </AnimatePresence>

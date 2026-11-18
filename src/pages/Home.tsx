@@ -209,25 +209,30 @@ function Work() {
 
 function Testimony() {
   return (
-    <section id="testimony" aria-labelledby="testimony-title" className="grid scroll-mt-4 gap-2 lg:grid-cols-[1fr_1.45fr]">
-      <Section as="div" className="flex min-h-[320px] flex-col justify-between gap-8 px-5 py-8 sm:px-8 sm:py-10">
+    <section
+      id="testimony"
+      aria-labelledby="testimony-title"
+      className="jelly grid scroll-mt-4 gap-8 rounded-[var(--radius-card)] px-5 py-10 sm:px-8 sm:py-12 lg:grid-cols-[0.85fr_1.3fr] lg:gap-14"
+    >
+      <div className="flex flex-col justify-between gap-10">
         <div className="flex flex-col gap-6">
           <Rule className="w-14" />
           <Title id="testimony-title" lines={HOME.testimonyTitle} align="left" />
+          <p className="max-w-[21rem] text-muted">First names only. They are talking about the work, not the company they keep.</p>
         </div>
         <div className="flex items-end justify-between gap-6">
-          <div className="w-28" aria-hidden>
+          <div className="w-24" aria-hidden>
             <Holo kind="star" motion />
           </div>
-          <p className="max-w-[12rem] text-right text-muted">
+          <p className="max-w-[11rem] text-right text-muted">
             <span className="block text-4xl font-normal tracking-[-0.05em] text-ink">4.9 / 5</span>
             Average client rating.
           </p>
         </div>
-      </Section>
-      <Card tone="violet" className="p-6 sm:p-10">
-        <TestimonialSlider items={TESTIMONIALS} />
-      </Card>
+      </div>
+      <div className="rounded-[calc(var(--radius-card)-8px)] bg-white/55 p-6 ring-1 ring-white/60 sm:p-9">
+        <TestimonialSlider items={TESTIMONIALS} tone="white" />
+      </div>
     </section>
   )
 }

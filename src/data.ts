@@ -342,11 +342,27 @@ export const PROJECTS: Project[] = [
   },
 ]
 
+// First names only, in the voice of the person who paid for the work.
 export const TESTIMONIALS = [
-  { quote: 'PrimeAxis gave our science a face. Investors started the meeting talking about the brand.', name: 'Dr. Ines Hartmann', role: 'Founder, Aurora Labs', project: 'aurora-labs' },
-  { quote: 'They sat with our engineers every week. Handoff was not a moment, it was the whole project.', name: 'Jonas Weber', role: 'VP Product, Meridian', project: 'meridian' },
-  { quote: 'The bravest brief we ever wrote, and they made it look obvious. Spring sales were the best in our history.', name: 'Mara Olsen', role: 'Brand Director, Kite Outdoor', project: 'kite-outdoor' },
-  { quote: 'Calm, precise and very fast. Our seven hotels finally look like a family.', name: 'Luca Bianchi', role: 'CEO, Halcyon Hotels', project: 'halcyon' },
+  {
+    quote:
+      'I had been going back and forth with two other people for months and nothing moved. Michael asked the right questions on the first call, sent a plan that same week, and the site was live before I could overthink it.',
+    name: 'Tunde Adebayo',
+  },
+  {
+    quote:
+      'I run everything from my phone, so I needed it simple. Three months now, no downtime, no customer complaining. That is all I wanted.',
+    name: 'Chioma Obi',
+  },
+  {
+    quote: 'The best part? They told me what I did not need, and saved me money. In this Lagos, that is rare.',
+    name: 'Emeka Nwosu',
+  },
+  {
+    quote:
+      'I no go lie, I was not sure about spending that amount. But what they built is clean, and it loads fast even on poor network.',
+    name: 'Segun Ojo',
+  },
 ]
 
 export type TeamMember = {

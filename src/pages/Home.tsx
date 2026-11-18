@@ -207,9 +207,6 @@ function Work() {
   )
 }
 
-/** Tile tones for the quote wall: one violet tile breaks the white run. */
-const QUOTE_TONES = ['white', 'soft', 'violet', 'white'] as const
-
 /** Five stars with a true partial fill, so 4.9 reads as 4.9 at a glance. */
 function Stars({ value }: { value: number }) {
   const raw = useId().replace(/[^a-zA-Z0-9]/g, '')
@@ -249,38 +246,34 @@ function Testimony() {
     >
       <Section
         as="div"
-        className="flex flex-col justify-between gap-10 px-5 py-10 sm:px-8 lg:sticky lg:top-[5.5rem] lg:self-start"
+        className="flex flex-col gap-8 px-5 py-10 sm:px-8 lg:sticky lg:top-[5.5rem] lg:justify-center lg:self-start lg:py-0"
       >
         <div className="flex flex-col gap-6">
           <Rule className="w-14" />
           <Title id="testimony-title" lines={HOME.testimonyTitle} align="left" />
         </div>
-        <div className="flex items-end justify-between gap-6 border-t border-line pt-6">
-          <div className="w-20" aria-hidden>
-            <Holo kind="star" motion />
-          </div>
-          <div className="flex flex-col items-end gap-2">
-            <Stars value={4.9} />
-            <p className="text-right text-muted">
-              <span className="text-2xl font-normal tracking-[-0.04em] text-ink tabular-nums">4.9</span>
-              <span className="ml-2">average client rating</span>
-            </p>
-          </div>
+        <div className="border-t border-line pt-6">
+          <Stars value={4.9} />
+          <p className="mt-3 text-muted">
+            <span className="text-2xl font-normal tracking-[-0.04em] text-ink tabular-nums">4.9</span>
+            <span className="ml-2">average client rating</span>
+          </p>
         </div>
       </Section>
       {/* All four at once: a carousel hid three of them behind arrows. */}
       <ul className="grid gap-2 sm:grid-cols-2">
         {TESTIMONIALS.map((t, i) => {
-          const tone = QUOTE_TONES[i % QUOTE_TONES.length]
+          // One dark tile breaks the white run; soft would vanish against the jelly.
+          const tone = i === 2 ? ('night' as const) : ('white' as const)
           return (
             <li key={t.name} className="h-full">
               <Reveal delay={i * 0.05} y={16} className="h-full">
-                <Card tone={tone} className="flex h-full min-h-[15rem] flex-col justify-between gap-8 p-6 sm:p-7">
-                  <blockquote className="text-[clamp(1.05rem,0.85rem+0.5vw,1.35rem)] leading-[1.3] tracking-[-0.02em]">
+                <Card tone={tone} className="flex h-full flex-col justify-between gap-8 p-6 sm:min-h-[15rem] sm:p-7">
+                  <blockquote className="text-[clamp(1.15rem,0.9rem+0.55vw,1.45rem)] leading-[1.28] tracking-[-0.025em] text-pretty">
                     “{t.quote}”
                   </blockquote>
                   <p className="flex items-center gap-3">
-                    <span aria-hidden className={cx('h-px w-6', tone === 'violet' ? 'bg-white/50' : 'bg-ink/20')} />
+                    <span aria-hidden className={cx('h-px w-6', tone === 'night' ? 'bg-white/50' : 'bg-ink/20')} />
                     <span className="font-medium">{t.name}</span>
                   </p>
                 </Card>

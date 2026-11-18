@@ -230,9 +230,8 @@ function Testimony() {
           </p>
         </div>
       </div>
-      <div className="rounded-[calc(var(--radius-card)-8px)] bg-white/55 p-6 ring-1 ring-white/60 sm:p-9">
-        <TestimonialSlider items={TESTIMONIALS} tone="white" />
-      </div>
+      {/* No panel of its own: the quote sits straight on the jelly. */}
+      <TestimonialSlider items={TESTIMONIALS} tone="white" />
     </section>
   )
 }

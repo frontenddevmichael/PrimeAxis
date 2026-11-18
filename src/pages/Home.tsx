@@ -1,5 +1,5 @@
 import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from 'motion/react'
-import { useRef, useState, type PointerEvent } from 'react'
+import { useId, useRef, useState, type PointerEvent } from 'react'
 
 import { ArrowLink, Reveal, Title } from '../components/Bits'
 import { Card, Section } from '../components/Card'
@@ -207,6 +207,36 @@ function Work() {
   )
 }
 
+/** Five stars with a true partial fill, so 4.9 reads as 4.9 at a glance. */
+function Stars({ value }: { value: number }) {
+  const raw = useId().replace(/[^a-zA-Z0-9]/g, '')
+  return (
+    <div className="flex items-center gap-1 text-violet" aria-hidden>
+      {[0, 1, 2, 3, 4].map((i) => {
+        const cut = `${Math.round(Math.max(0, Math.min(1, value - i)) * 100)}%`
+        return (
+          <svg key={i} viewBox="0 0 20 20" className="size-[18px] shrink-0">
+            <defs>
+              <linearGradient id={`${raw}-${i}`}>
+                <stop offset={cut} stopColor="currentColor" />
+                <stop offset={cut} stopColor="currentColor" stopOpacity="0.14" />
+              </linearGradient>
+            </defs>
+            <path
+              d="M10 1.9l2.45 5.02 5.55.76-4.06 3.86 1 5.46L10 14.42l-4.94 2.58 1-5.46L2 7.68l5.55-.76z"
+              fill={`url(#${raw}-${i})`}
+              stroke="currentColor"
+              strokeOpacity="0.3"
+              strokeWidth="0.9"
+              strokeLinejoin="round"
+            />
+          </svg>
+        )
+      })}
+    </div>
+  )
+}
+
 function Testimony() {
   return (
     <section
@@ -218,16 +248,18 @@ function Testimony() {
         <div className="flex flex-col gap-6">
           <Rule className="w-14" />
           <Title id="testimony-title" lines={HOME.testimonyTitle} align="left" />
-          <p className="max-w-[21rem] text-muted">First names only. They are talking about the work, not the company they keep.</p>
         </div>
         <div className="flex items-end justify-between gap-6">
           <div className="w-24" aria-hidden>
             <Holo kind="star" motion />
           </div>
-          <p className="max-w-[11rem] text-right text-muted">
-            <span className="block text-4xl font-normal tracking-[-0.05em] text-ink">4.9 / 5</span>
-            Average client rating.
-          </p>
+          <div className="flex flex-col items-end gap-2">
+            <Stars value={4.9} />
+            <p className="text-right text-muted">
+              <span className="text-2xl font-normal tracking-[-0.04em] text-ink tabular-nums">4.9</span>
+              <span className="ml-2">average client rating</span>
+            </p>
+          </div>
         </div>
       </div>
       {/* No panel of its own: the quote sits straight on the jelly. */}

@@ -10,7 +10,7 @@ import { Holo } from '../components/Holo'
 import { EASE, Magnetic } from '../components/Motion'
 import { ProjectCard } from '../components/ProjectCard'
 import { ServiceCard } from '../components/ServiceCard'
-import { APPROACH, CLIENTS, HOME, PROJECTS, SERVICES, SHOW_PROJECTS, SITE, TESTIMONIALS } from '../data'
+import { APPROACH, CLIENTS, HOME, PROJECTS, SERVICES, SHOW_PROJECTS, TESTIMONIALS } from '../data'
 import { cx } from '../lib/cx'
 import { useDocumentTitle } from '../lib/storage'
 
